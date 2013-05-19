@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+.DS_Store
+.idea/
+lib/
+target/
+work/
+src/main/webapp/WEB-INF/classes/
+src/main/webapp/WEB-INF/lib/

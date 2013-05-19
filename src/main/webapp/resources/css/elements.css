@@ -1,0 +1,28 @@
+/*---------------------------------------------------
+    LESS Elements 0.6
+  ---------------------------------------------------
+    A set of useful LESS mixins by Dmitry Fadeyev
+    Special thanks for mixin suggestions to:
+      Kris Van Herzeele,
+      Benoit Adam,
+      Portenart Emile-Victor,
+      Ryan Faerman
+
+    More info at: http://lesselements.com
+-----------------------------------------------------*/
+div.ajax-progress {
+	position: fixed;
+	display: none;
+	width: 100px;
+	height: 100px;
+	top: 40%;
+	left: 45%;
+	background-image: url('../images/loading.gif');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: white;
+	border: opx solid green;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
