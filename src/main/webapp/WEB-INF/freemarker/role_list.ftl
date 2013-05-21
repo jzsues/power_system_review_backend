@@ -12,6 +12,7 @@
 <!-- Modal -->
 <div id="show-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
+	<div class="ajax-progress"></div>
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 		<h3 id="myModalLabel">功能信息</h3>

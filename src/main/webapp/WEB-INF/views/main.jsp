@@ -37,6 +37,8 @@
 <script src="<c:url value='/resources/js/biz/user.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/biz/func.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/biz/role.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/station.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/qrcode.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
 	$("[rel=tooltip]").tooltip();
 	$(function() {

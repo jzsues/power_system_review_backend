@@ -3,6 +3,7 @@
  */
 package com.zvidia.backend.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -42,7 +43,7 @@ public class StationInfo extends AbstractEntity {
 	/**
 	 * 二维码信息
 	 */
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.ALL })
 	private QRCodeInfo qrCodeInfo;
 
 	public String getName() {

@@ -18,6 +18,8 @@ import com.zvidia.common.entity.AbstractEntity;
 public class QRCodeInfo extends AbstractEntity {
 	private String qrcode;
 
+	private String url;
+
 	private String remark;
 
 	public String getQrcode() {
@@ -34,6 +36,14 @@ public class QRCodeInfo extends AbstractEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

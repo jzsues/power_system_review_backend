@@ -14,6 +14,7 @@
 <!-- Modal -->
 <div id="show-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	aria-hidden="true">
+	<div class="ajax-progress"></div>
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 		<h3 id="myModalLabel">用户信息</h3>
@@ -44,7 +45,7 @@
 				<div class="controls">
 					<select id="shipId" name="shipId" class="input-xlarge" required>
 						<#list datas as role>
-							<option value="${role.id}">${role.authority}</option>
+							<option value="${role.id}">${role.roleDesc}</option>
 						</#list>
 					</select>
 					<p class="help-block"></p>
