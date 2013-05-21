@@ -62,12 +62,12 @@ var user_biz = {
 								"mData" : "username"
 							}, {
 								"aTargets" : [ 2 ],
-								"mData" : "email"
+								"mData" : "nickName"
 							}, {
 								"aTargets" : [ 3 ],
 								"mData" : "enabled",
 								"mRender" : function(data, type, full) {
-									return data;
+									return (data) ? "是" : "否";
 								}
 							}, {
 								"aTargets" : [ 4 ],
@@ -83,12 +83,14 @@ var user_biz = {
 			$("#user-form").validate();
 			$(".ajax-progress").toggle();
 			var oTable = $('#user-list-table').dataTable();
+			var json = $("#user-form").serializeObject();
+			var roleId = json.roleId;
 			$.ajax({
-				url : Utils.ctxPath() + "/user/ajax/save",
+				url : Utils.ctxPath() + "/user/ajax/save?roleId=" + roleId,
 				type : "POST",
 				dataType : "json",
 				contentType : "application/json",
-				data : JSON.stringify($("#user-form").serializeObject()),
+				data : JSON.stringify(json),
 				success : function(data, textStatus) {
 					$(".ajax-progress").toggle();
 					$("#show-dialog").modal("hide");
@@ -118,21 +120,30 @@ var user_biz = {
 		});
 	},
 	update_fn : function(id) {
-		$.ajax({
-			url : Utils.ctxPath() + "/user/ajax/" + id,
-			type : "POST",
-			dataType : "json",
-			contentType : "application/json",
-			success : function(data, textStatus) {
-				if (data.addition) {
-					$("#user-form").populateJSON2Form(data.addition);
-					$("#show-dialog").modal("show");
-				}
-			},
-			error : function() {
-				console.log(arguments);
-			}
-		});
+		$
+				.ajax({
+					url : Utils.ctxPath() + "/user/ajax/" + id,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json",
+					success : function(data, textStatus) {
+						if (data.addition) {
+							$("#user-form").populateJSON2Form(data.addition);
+							var roleId = (data.addition.authorities && data.addition.authorities.length > 0) ? data.addition.authorities[0].id
+									: "";
+							$("#user-form").find("#roleId").val(roleId);
+							$("#show-dialog").modal("show").css({
+								width : '75%',
+								'margin-left' : function() {
+									return -($(this).width() / 2);
+								}
+							});;
+						}
+					},
+					error : function() {
+						console.log(arguments);
+					}
+				});
 
 	}
 };

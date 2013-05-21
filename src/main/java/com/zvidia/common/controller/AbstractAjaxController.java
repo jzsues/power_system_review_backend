@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zvidia.backend.controller;
+package com.zvidia.common.controller;
 
 import java.util.concurrent.Callable;
 
@@ -24,7 +24,6 @@ import com.zvidia.common.entity.AjaxResponse;
 import com.zvidia.common.mvc.AjaxPaginationFactory;
 import com.zvidia.common.mvc.AjaxPaginationResponse;
 
-
 /**
  * @author jiangzm
  * 
@@ -44,14 +43,12 @@ public abstract class AbstractAjaxController<T, ID> {
 	}
 
 	/**
-	 * 生成查询列表页面的时附带的数据
+	 * 生成查询列表页面的时附带AjaxResponse.addition数据
 	 * 
 	 * @param request
 	 * @return
 	 */
-	protected Object getPageAddition(HttpServletRequest request) {
-		return "success";
-	}
+	protected abstract Object beforeFTLRender(HttpServletRequest request);
 
 	/**
 	 * 保存数据前处理
@@ -59,9 +56,7 @@ public abstract class AbstractAjaxController<T, ID> {
 	 * @param entity
 	 * @param request
 	 */
-	protected void handlerSaveRequest(T entity, HttpServletRequest request) {
-
-	}
+	protected abstract void beforeSaveRequest(T entity, HttpServletRequest request);
 
 	/**
 	 * 查询分页结果
@@ -69,14 +64,14 @@ public abstract class AbstractAjaxController<T, ID> {
 	 * @param pageable
 	 * @return
 	 */
-	protected abstract Page<T> getAjaxPageData(Pageable pageable);
+	protected abstract Page<T> doPageQuery(Pageable pageable);
 
 	/**
 	 * 处理返回的分页结果
 	 * 
 	 * @param result
 	 */
-	protected abstract void doProcess(Page<T> result);
+	protected abstract void afterPageQuery(Page<T> result);
 
 	/**
 	 * 保存数据
@@ -103,14 +98,12 @@ public abstract class AbstractAjaxController<T, ID> {
 
 	@RequestMapping("/page")
 	public @ResponseBody
-	Callable<AjaxResponse> page(
-			final @RequestParam(value = "callback", required = false) String callback,
-			final @RequestParam(value = "ftl", required = false) String ftl,
-			final HttpServletRequest request) {
+	Callable<AjaxResponse> page(final @RequestParam(value = "callback", required = false) String callback,
+			final @RequestParam(value = "ftl", required = false) String ftl, final HttpServletRequest request) {
 		return new Callable<AjaxResponse>() {
 			@Override
 			public AjaxResponse call() throws Exception {
-				Object addition = getPageAddition(request);
+				Object addition = beforeFTLRender(request);
 				AjaxResponse ajaxResponse = new AjaxResponse(addition);
 				ajaxResponse.setFtl(ftl);
 				ajaxResponse.setCallback(callback);
@@ -127,13 +120,11 @@ public abstract class AbstractAjaxController<T, ID> {
 			@Override
 			public AjaxPaginationResponse call() throws Exception {
 				AjaxPaginationFactory ajaxPaginationFactory = getAjaxPaginationFactory();
-				Pageable pageable = (ajaxPaginationFactory == null) ? new PageRequest(
-						DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE)
+				Pageable pageable = (ajaxPaginationFactory == null) ? new PageRequest(DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE)
 						: ajaxPaginationFactory.pageable(request);
-				Page<T> result = getAjaxPageData(pageable);
-				doProcess(result);
-				AjaxPaginationResponse response = ajaxPaginationFactory
-						.response(request, result);
+				Page<T> result = doPageQuery(pageable);
+				afterPageQuery(result);
+				AjaxPaginationResponse response = ajaxPaginationFactory.response(request, result);
 				return response;
 			}
 		};
@@ -141,13 +132,12 @@ public abstract class AbstractAjaxController<T, ID> {
 
 	@RequestMapping(value = "/ajax/save", method = { RequestMethod.POST })
 	public @ResponseBody
-	Callable<AjaxResponse> save(final @RequestBody T entity,
-			final HttpServletRequest request) {
+	Callable<AjaxResponse> save(final @RequestBody T entity, final HttpServletRequest request) {
 		return new Callable<AjaxResponse>() {
 
 			@Override
 			public AjaxResponse call() throws Exception {
-				handlerSaveRequest(entity, request);
+				beforeSaveRequest(entity, request);
 				T doSaved = doSave(entity);
 				return new AjaxResponse(doSaved);
 			}
@@ -155,8 +145,7 @@ public abstract class AbstractAjaxController<T, ID> {
 		};
 	}
 
-	@RequestMapping(value = "/ajax/{id}", method = { RequestMethod.POST,
-			RequestMethod.GET })
+	@RequestMapping(value = "/ajax/{id}", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody
 	Callable<AjaxResponse> get(final @PathVariable("id") ID id) {
 		return new Callable<AjaxResponse>() {

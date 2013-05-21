@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import com.zvidia.backend.meta.ReviewResult;
 import com.zvidia.common.entity.AbstractEntity;
 
 /**
@@ -25,8 +26,15 @@ public class ReviewItemInfo extends AbstractEntity {
 
 	/**
 	 * 巡检结果
+	 * 
+	 * @see ReviewResult
 	 */
 	private String result;
+
+	/**
+	 * 是否报警
+	 */
+	private boolean alarm;
 
 	/**
 	 * 备注
@@ -55,6 +63,14 @@ public class ReviewItemInfo extends AbstractEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public boolean isAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(boolean alarm) {
+		this.alarm = alarm;
 	}
 
 }

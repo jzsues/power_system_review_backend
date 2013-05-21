@@ -14,7 +14,8 @@
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/lib/bootstrap/css/bootstrap.min.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/lib/datatables/css/DT_bootstrap.css'/>">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/lib/bootstrap-datetimepicker/css/datetimepicker.css'/>">
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/resources/lib/bootstrap-datetimepicker/css/datetimepicker.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/lib/datatables/css/TableTools.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/theme.css'/>" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/elements.css'/>" />
@@ -23,8 +24,10 @@
 <script src="<c:url value='/resources/lib/validate/jquery.validate.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/lib/validate/localization/messages_zh.js'/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/lib/bootstrap/js/bootstrap.js"/>" type="text/javascript"></script>
-<script src="<c:url value="/resources/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"/>" type="text/javascript"></script>
-<script src="<c:url value="/resources/lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"/>" type="text/javascript" charset="UTF-8"></script>
+<script src="<c:url value="/resources/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"/>"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/lib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"/>"
+	type="text/javascript" charset="UTF-8"></script>
 <script src="<c:url value="/resources/lib/datatables/js/jquery.dataTables.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/lib/datatables/js/DT_bootstrap.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/resources/lib/datatables/js/ZeroClipboard.js"/>" type="text/javascript"></script>
@@ -39,6 +42,8 @@
 <script src="<c:url value='/resources/js/biz/role.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/biz/station.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/js/biz/qrcode.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/checkpoint.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/review.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
 	$("[rel=tooltip]").tooltip();
 	$(function() {

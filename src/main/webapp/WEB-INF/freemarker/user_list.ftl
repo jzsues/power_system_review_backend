@@ -3,7 +3,7 @@
 		<tr>
 			<th>操作</th>
 			<th>用戶名</th>
-			<th>Email</th>
+			<th>姓名</th>
 			<th>是否有效</th>
 			<th>最后更新时间</th>
 		</tr>
@@ -24,26 +24,27 @@
 			<div class="control-group">
 				<label class="control-label" for="username">用户名</label>
 				<div class="controls">
-					<input type="hidden" id="id" name="id"> <input type="text" id="username" name="username" placeholder="用户名">
+					<input type="hidden" id="id" name="id"> <input type="text" id="username" name="username" class="input-large" placeholder="用户名" required>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="password">密码</label>
 				<div class="controls">
-					<input type="password" id="password" name="password" placeholder="密码">
+					<input type="password" id="password" name="password" placeholder="密码" class="input-large" required>
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="email">Email</label>
+				<label class="control-label" for="nickName">姓名</label>
 				<div class="controls">
-					<input type="text" id="email" name="email" placeholder="Email" class="">
+					<input type="text" id="nickName" name="nickName" placeholder="姓名" class="input-large" required>
 				</div>
 			</div>
 			<div class="control-group">
 				<!-- Text input-->
 				<label class="control-label" for="roleId">角色</label>
 				<div class="controls">
-					<select id="shipId" name="shipId" class="input-xlarge" required>
+					<select id="roleId" name="roleId" class="input-xlarge" required>
+						<option value="">请选择</option>
 						<#list datas as role>
 							<option value="${role.id}">${role.roleDesc}</option>
 						</#list>

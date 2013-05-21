@@ -6,6 +6,7 @@ package com.zvidia.backend.entity;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -44,9 +45,19 @@ public class ReviewInfo extends AbstractEntity {
 	/**
 	 * 巡检结果
 	 */
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL })
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private Collection<ReviewItemInfo> reviewItemInfos;
+
+	/**
+	 * 是否有报警项目
+	 */
+	private boolean alarm;
+
+	/**
+	 * 巡检备注
+	 */
+	private String remark;
 
 	public UserInfo getUserInfo() {
 		return userInfo;
@@ -78,6 +89,22 @@ public class ReviewInfo extends AbstractEntity {
 
 	public void setReviewItemInfos(Collection<ReviewItemInfo> reviewItemInfos) {
 		this.reviewItemInfos = reviewItemInfos;
+	}
+
+	public boolean isAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(boolean alarm) {
+		this.alarm = alarm;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

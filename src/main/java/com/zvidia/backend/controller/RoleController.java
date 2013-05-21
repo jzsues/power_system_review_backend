@@ -3,6 +3,8 @@
  */
 package com.zvidia.backend.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.backend.repository.RoleRepository;
+import com.zvidia.common.controller.AbstractAjaxController;
 import com.zvidia.common.entity.RoleInfo;
 
 /**
@@ -28,12 +31,12 @@ public class RoleController extends AbstractAjaxController<RoleInfo, Long> {
 	RoleRepository roleRepository;
 
 	@Override
-	protected Page<RoleInfo> getAjaxPageData(Pageable pageable) {
+	protected Page<RoleInfo> doPageQuery(Pageable pageable) {
 		return roleRepository.findAll(pageable);
 	}
 
 	@Override
-	protected void doProcess(Page<RoleInfo> result) {
+	protected void afterPageQuery(Page<RoleInfo> result) {
 
 	}
 
@@ -50,6 +53,17 @@ public class RoleController extends AbstractAjaxController<RoleInfo, Long> {
 	@Override
 	protected RoleInfo doGet(Long id) {
 		return roleRepository.findOne(id);
+	}
+
+	@Override
+	protected void beforeSaveRequest(RoleInfo entity, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected Object beforeFTLRender(HttpServletRequest request) {
+		return "success";
 	}
 
 }

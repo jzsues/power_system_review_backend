@@ -16,7 +16,7 @@
 	<div class="ajax-progress"></div>
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-		<h3 id="myModalLabel">巡检站点信息</h3>
+		<h3 id="myModalLabel">配电设备站点信息</h3>
 	</div>
 	<div class="modal-body">
 		<form id="station-form" class="form-horizontal">

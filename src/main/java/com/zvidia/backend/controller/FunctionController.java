@@ -3,6 +3,8 @@
  */
 package com.zvidia.backend.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zvidia.backend.repository.FunctionRepository;
+import com.zvidia.common.controller.AbstractAjaxController;
 import com.zvidia.common.entity.FunctionInfo;
 
 /**
@@ -24,12 +27,12 @@ public class FunctionController extends AbstractAjaxController<FunctionInfo, Lon
 	FunctionRepository functionRepository;
 
 	@Override
-	protected Page<FunctionInfo> getAjaxPageData(Pageable pageable) {
+	protected Page<FunctionInfo> doPageQuery(Pageable pageable) {
 		return functionRepository.findAll(pageable);
 	}
 
 	@Override
-	protected void doProcess(Page<FunctionInfo> result) {
+	protected void afterPageQuery(Page<FunctionInfo> result) {
 
 	}
 
@@ -46,5 +49,15 @@ public class FunctionController extends AbstractAjaxController<FunctionInfo, Lon
 	@Override
 	protected FunctionInfo doGet(Long id) {
 		return functionRepository.findOne(id);
+	}
+
+	@Override
+	protected void beforeSaveRequest(FunctionInfo entity, HttpServletRequest request) {
+
+	}
+
+	@Override
+	protected Object beforeFTLRender(HttpServletRequest request) {
+		return "success";
 	}
 }

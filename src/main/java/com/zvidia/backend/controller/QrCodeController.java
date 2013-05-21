@@ -6,6 +6,8 @@ package com.zvidia.backend.controller;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import com.zvidia.backend.entity.StationInfo;
 import com.zvidia.backend.repository.QRCodeRepository;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.service.QRCodeService;
+import com.zvidia.common.controller.AbstractAjaxController;
 import com.zvidia.common.entity.AjaxResponse;
 
 /**
@@ -42,21 +45,20 @@ public class QrCodeController extends AbstractAjaxController<StationInfo, Long> 
 	QRCodeService qrCodeService;
 
 	@Override
-	protected Page<StationInfo> getAjaxPageData(Pageable pageable) {
+	protected Page<StationInfo> doPageQuery(Pageable pageable) {
 		Page<StationInfo> findAll = stationRepository.findAll(pageable);
+		return findAll;
+	}
+
+	@Override
+	protected void afterPageQuery(Page<StationInfo> result) {
 		String fileHttpContextPath = qrCodeService.getFileHttpContextPath();
-		for (StationInfo station : findAll.getContent()) {
+		for (StationInfo station : result.getContent()) {
 			QRCodeInfo qrCodeInfo = station.getQrCodeInfo();
 			if (qrCodeInfo != null) {
 				qrCodeInfo.setUrl(fileHttpContextPath + qrCodeInfo.getUrl());
 			}
 		}
-		return findAll;
-	}
-
-	@Override
-	protected void doProcess(Page<StationInfo> result) {
-
 	}
 
 	@Override
@@ -155,5 +157,16 @@ public class QrCodeController extends AbstractAjaxController<StationInfo, Long> 
 			this.mark = mark;
 		}
 
+	}
+
+	@Override
+	protected void beforeSaveRequest(StationInfo entity, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected Object beforeFTLRender(HttpServletRequest request) {
+		return "success";
 	}
 }

@@ -1,8 +1,8 @@
-var station_biz = {
+var checkpoint_biz = {
 
 	page_fetch_fn : function(success, error) {
 		$.ajax({
-			url : Utils.ctxPath() + "/station/page.json?ftl=station_list",
+			url : Utils.ctxPath() + "/checkpoint/page.json?ftl=checkpoint_list",
 			contentType : "application/json",
 			dataType : "json",
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -15,17 +15,17 @@ var station_biz = {
 
 	},
 	table_initial_fn : function() {
-		return $('#station-list-table').dataTable(
+		return $('#checkpoint-list-table').dataTable(
 				{
 					"sDom" : "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oTableTools" : {
 						"aButtons" : [ {
 							"sExtends" : "text",
-							"sButtonText" : '新增配电设备站点',
+							"sButtonText" : '新增巡检内容',
 							// "sButtonClass" : "btn btn-success",
 							"fnClick" : function(nButton, oConfig, oFlash) {
-								$("#station-form").find("input[id='id']").val("");
+								$("#checkpoint-form").find("input[id='id']").val("");
 								$("#show-dialog").modal("show").css({
 									width : '75%',
 									'margin-left' : function() {
@@ -37,7 +37,7 @@ var station_biz = {
 					},
 					"bProcessing" : true,
 					"bServerSide" : true,
-					"sAjaxSource" : Utils.ctxPath() + "/station/ajax/list",
+					"sAjaxSource" : Utils.ctxPath() + "/checkpoint/ajax/list",
 					"fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
 						oSettings.jqXHR = $.ajax({
 							"dataType" : 'json',
@@ -52,33 +52,34 @@ var station_biz = {
 								"aTargets" : [ 0 ],
 								"mData" : "id",
 								"mRender" : function(data, type, full) {
-									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'station_del\'](' + data
+									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'checkpoint_del\'](' + data
 											+ ')" class="btn btn-small del-row-btn">删除</button>' + '<button  data-id="' + data
-											+ '" onclick="window.event_handler_fns[\'station_update\'](' + data
+											+ '" onclick="window.event_handler_fns[\'checkpoint_update\'](' + data
 											+ ')" class="btn btn-small del-row-btn">修改</button>';
 								}
-							},
-							{
+							}, {
 								"aTargets" : [ 1 ],
-								"mData" : "name"
-							},
-							{
-								"aTargets" : [ 2 ],
-								"mData" : "address"
-							},
-							{
-								"aTargets" : [ 3 ],
-								"mData" : "qrCodeInfo",
+								"mData" : "deviceClassInfo",
 								"mRender" : function(data, type, full) {
-									if (data) {
-										return "<a target='_blank' href='" + data.url + "'><img width='100' height='100' src='" + data.url
-												+ "'></a>";
-									} else {
-										return "无";
-									}
+									return data.name;
+								}
+							}, {
+								"aTargets" : [ 2 ],
+								"mData" : "defectType"
+							}, {
+								"aTargets" : [ 3 ],
+								"mData" : "defectDetail",
+								"mRender" : function(data, type, full) {
+									return data
 								}
 							}, {
 								"aTargets" : [ 4 ],
+								"mData" : "alarm",
+								"mRender" : function(data, type, full) {
+									return (data) ? "是" : "否";
+								}
+							}, {
+								"aTargets" : [ 5 ],
 								"mData" : "updated",
 								"mRender" : function(data, type, full) {
 									return (!data) ? "" : (new Date(data)).format("yyyy-MM-dd hh:mm:ss");
@@ -87,16 +88,17 @@ var station_biz = {
 				});
 	},
 	form_initial_fn : function() {
-		$("#station-form").submit(function() {
-			$("#station-form").validate();
+		$("#checkpoint-form").submit(function() {
+			$("#checkpoint-form").validate();
 			$(".ajax-progress").toggle();
-			var oTable = $('#station-list-table').dataTable();
+			var oTable = $('#checkpoint-list-table').dataTable();
+			var json = $("#checkpoint-form").serializeObject();
 			$.ajax({
-				url : Utils.ctxPath() + "/station/ajax/save",
+				url : Utils.ctxPath() + "/checkpoint/ajax/save?deviceClassId=" + json.deviceClassId,
 				type : "POST",
 				dataType : "json",
 				contentType : "application/json",
-				data : JSON.stringify($("#station-form").serializeObject()),
+				data : JSON.stringify(json),
 				success : function(data, textStatus) {
 					$(".ajax-progress").toggle();
 					$("#show-dialog").modal("hide");
@@ -111,9 +113,9 @@ var station_biz = {
 
 	},
 	del_fn : function(id) {
-		var oTable = $('#station-list-table').dataTable();
+		var oTable = $('#checkpoint-list-table').dataTable();
 		$.ajax({
-			url : Utils.ctxPath() + "/station/ajax/del/" + id,
+			url : Utils.ctxPath() + "/checkpoint/ajax/del/" + id,
 			type : "POST",
 			dataType : "json",
 			contentType : "application/json",
@@ -127,13 +129,13 @@ var station_biz = {
 	},
 	update_fn : function(id) {
 		$.ajax({
-			url : Utils.ctxPath() + "/station/ajax/" + id,
+			url : Utils.ctxPath() + "/checkpoint/ajax/" + id,
 			type : "POST",
 			dataType : "json",
 			contentType : "application/json",
 			success : function(data, textStatus) {
 				if (data.addition) {
-					$("#station-form").populateJSON2Form(data.addition);
+					$("#checkpoint-form").populateJSON2Form(data.addition);
 					$("#show-dialog").modal("show").css({
 						width : '75%',
 						'margin-left' : function() {
@@ -155,9 +157,9 @@ var station_biz = {
 	var table_initial_fns = window.table_initial_fns;
 	var form_initial_fns = window.form_initial_fns;
 	var event_handler_fns = window.event_handler_fns;
-	page_initial_fns["station_info"] = station_biz.page_fetch_fn;
-	table_initial_fns["station_info"] = station_biz.table_initial_fn;
-	form_initial_fns["station_info"] = station_biz.form_initial_fn;
-	event_handler_fns["station_del"] = station_biz.del_fn;
-	event_handler_fns["station_update"] = station_biz.update_fn;
+	page_initial_fns["checkpoint_info"] = checkpoint_biz.page_fetch_fn;
+	table_initial_fns["checkpoint_info"] = checkpoint_biz.table_initial_fn;
+	form_initial_fns["checkpoint_info"] = checkpoint_biz.form_initial_fn;
+	event_handler_fns["checkpoint_del"] = checkpoint_biz.del_fn;
+	event_handler_fns["checkpoint_update"] = checkpoint_biz.update_fn;
 })(window, jQuery);

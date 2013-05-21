@@ -1,5 +1,7 @@
 package com.zvidia.backend.controller;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.backend.repository.RoleRepository;
 import com.zvidia.backend.repository.UserRepository;
+import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.entity.RoleInfo;
 import com.zvidia.common.entity.UserInfo;
 
 /**
@@ -30,16 +34,16 @@ public class UserController extends AbstractAjaxController<UserInfo, Long> {
 	RoleRepository roleRepository;
 
 	@Override
-	protected Page<UserInfo> getAjaxPageData(Pageable pageable) {
+	protected Page<UserInfo> doPageQuery(Pageable pageable) {
 		return userRepository.findAll(pageable);
 	}
 
-	protected Object getPageAddition(HttpServletRequest request) {
+	protected Object beforeFTLRender(HttpServletRequest request) {
 		return roleRepository.findAll();
 	}
 
 	@Override
-	protected void doProcess(Page<UserInfo> result) {
+	protected void afterPageQuery(Page<UserInfo> result) {
 
 	}
 
@@ -56,5 +60,14 @@ public class UserController extends AbstractAjaxController<UserInfo, Long> {
 	@Override
 	protected UserInfo doGet(Long id) {
 		return userRepository.findOne(id);
+	}
+
+	@Override
+	protected void beforeSaveRequest(UserInfo entity, HttpServletRequest request) {
+		long roleId = Long.parseLong(request.getParameter("roleId"));
+		RoleInfo roleInfo = roleRepository.findOne(roleId);
+		Collection<RoleInfo> authorities = entity.getAuthorities();
+		authorities.add(roleInfo);
+		entity.setAuthorities(authorities);
 	}
 }
