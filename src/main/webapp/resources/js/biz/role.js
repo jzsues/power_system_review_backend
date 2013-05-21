@@ -1,7 +1,8 @@
-var announcement_biz = {
+var role_biz = {
+
 	page_fetch_fn : function(success, error) {
 		$.ajax({
-			url : Utils.ctxPath() + "/announcement/page.json?ftl=announcement_list",
+			url : Utils.ctxPath() + "/role/page.json?ftl=role_list",
 			contentType : "application/json",
 			dataType : "json",
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -11,18 +12,20 @@ var announcement_biz = {
 				success(data);
 			}
 		});
+
 	},
 	table_initial_fn : function() {
-		return $('#announcement-list-table').dataTable(
+		return $('#role-list-table').dataTable(
 				{
 					"sDom" : "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oTableTools" : {
 						"aButtons" : [ {
 							"sExtends" : "text",
-							"sButtonText" : '发布公告',
+							"sButtonText" : '新增角色',
 							// "sButtonClass" : "btn btn-success",
 							"fnClick" : function(nButton, oConfig, oFlash) {
+								$("#role-form").find("input[id='id']").val("");
 								$("#show-dialog").modal("show").css({
 									width : '75%',
 									'margin-left' : function() {
@@ -34,8 +37,7 @@ var announcement_biz = {
 					},
 					"bProcessing" : true,
 					"bServerSide" : true,
-					"sAjaxSource" : Utils.ctxPath() + "/announcement/ajax/list",
-					"aaSorting" : [ [ 0, "desc" ] ],
+					"sAjaxSource" : Utils.ctxPath() + "/role/ajax/list",
 					"fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
 						oSettings.jqXHR = $.ajax({
 							"dataType" : 'json',
@@ -50,48 +52,37 @@ var announcement_biz = {
 								"aTargets" : [ 0 ],
 								"mData" : "id",
 								"mRender" : function(data, type, full) {
-
-									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'announcement_del\'](' + data
-											+ ')" class="btn btn-small del-row-btn">删除</button>';
+									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'role_del\'](' + data
+											+ ')" class="btn btn-small del-row-btn">删除</button>' + '<button  data-id="' + data
+											+ '" onclick="window.event_handler_fns[\'role_update\'](' + data
+											+ ')" class="btn btn-small del-row-btn">修改</button>';
 								}
 							}, {
 								"aTargets" : [ 1 ],
-								"mData" : "title"
+								"mData" : "authority"
 							}, {
 								"aTargets" : [ 2 ],
-								"mData" : "type",
-								"mRender" : function(data, type, full) {
-									return (!AnnouncementType[data]) ? "未知" : AnnouncementType[data];
-								}
+								"mData" : "roleDesc"
 							}, {
 								"aTargets" : [ 3 ],
-								"mData" : "status",
-								"mRender" : function(data, type, full) {
-									return (!AnnouncementStatus[data]) ? "未知" : AnnouncementStatus[data];
-								}
-							}, {
-								"aTargets" : [ 4 ],
 								"mData" : "updated",
 								"mRender" : function(data, type, full) {
 									return (!data) ? "" : (new Date(data)).format("yyyy-MM-dd hh:mm:ss");
 								}
-							} ],
-					"fnInitComplete" : function(oSettings, json) {
-
-					}
+							} ]
 				});
 	},
 	form_initial_fn : function() {
-		$("#announcement-form").submit(function() {
-			$("#announcement-form").validate();
+		$("#role-form").submit(function() {
+			$("#role-form").validate();
 			$(".ajax-progress").toggle();
-			var oTable = $('#announcement-list-table').dataTable();
+			var oTable = $('#role-list-table').dataTable();
 			$.ajax({
-				url : Utils.ctxPath() + "/announcement/ajax/save",
+				url : Utils.ctxPath() + "/role/ajax/save",
 				type : "POST",
 				dataType : "json",
 				contentType : "application/json",
-				data : JSON.stringify($("#announcement-form").serializeObject()),
+				data : JSON.stringify($("#role-form").serializeObject()),
 				success : function(data, textStatus) {
 					$(".ajax-progress").toggle();
 					$("#show-dialog").modal("hide");
@@ -103,11 +94,12 @@ var announcement_biz = {
 			});
 			return false;
 		});
+
 	},
 	del_fn : function(id) {
-		var oTable = $('#announcement-list-table').dataTable();
+		var oTable = $('#role-list-table').dataTable();
 		$.ajax({
-			url : Utils.ctxPath() + "/announcement/ajax/del/" + id,
+			url : Utils.ctxPath() + "/role/ajax/del/" + id,
 			type : "POST",
 			dataType : "json",
 			contentType : "application/json",
@@ -118,9 +110,25 @@ var announcement_biz = {
 				oTable.fnDraw();
 			}
 		});
+	},
+	update_fn : function(id) {
+		$.ajax({
+			url : Utils.ctxPath() + "/role/ajax/" + id,
+			type : "POST",
+			dataType : "json",
+			contentType : "application/json",
+			success : function(data, textStatus) {
+				if (data.addition) {
+					$("#role-form").populateJSON2Form(data.addition);
+					$("#show-dialog").modal("show");
+				}
+			},
+			error : function() {
+				console.log(arguments);
+			}
+		});
 
 	}
-
 };
 
 (function(window, $) {
@@ -128,8 +136,9 @@ var announcement_biz = {
 	var table_initial_fns = window.table_initial_fns;
 	var form_initial_fns = window.form_initial_fns;
 	var event_handler_fns = window.event_handler_fns;
-	page_initial_fns["announcement_info"] = announcement_biz.page_fetch_fn;
-	table_initial_fns["announcement_info"] = announcement_biz.table_initial_fn;
-	form_initial_fns["announcement_info"] = announcement_biz.form_initial_fn;
-	event_handler_fns["announcement_del"] = announcement_biz.del_fn;
+	page_initial_fns["role_info"] = role_biz.page_fetch_fn;
+	table_initial_fns["role_info"] = role_biz.table_initial_fn;
+	form_initial_fns["role_info"] = role_biz.form_initial_fn;
+	event_handler_fns["role_del"] = role_biz.del_fn;
+	event_handler_fns["role_update"] = role_biz.update_fn;
 })(window, jQuery);

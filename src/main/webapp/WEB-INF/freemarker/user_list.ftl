@@ -3,7 +3,7 @@
 		<tr>
 			<th>操作</th>
 			<th>用戶名</th>
-			<th>昵称</th>
+			<th>Email</th>
 			<th>是否有效</th>
 			<th>最后更新时间</th>
 		</tr>
@@ -12,7 +12,8 @@
 	</tbody>
 </table>
 <!-- Modal -->
-<div id="show-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="show-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 		<h3 id="myModalLabel">用户信息</h3>
@@ -32,15 +33,21 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="reinputPassword">再次输入密码</label>
+				<label class="control-label" for="email">Email</label>
 				<div class="controls">
-					<input type="password" id="reinputPassword" placeholder="再次输入密码">
+					<input type="text" id="email" name="email" placeholder="Email" class="">
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label" for="email">Email</label>
+				<!-- Text input-->
+				<label class="control-label" for="roleId">角色</label>
 				<div class="controls">
-					<input type="text" id="email" name="email" placeholder="Email">
+					<select id="shipId" name="shipId" class="input-xlarge" required>
+						<#list datas as role>
+							<option value="${role.id}">${role.authority}</option>
+						</#list>
+					</select>
+					<p class="help-block"></p>
 				</div>
 			</div>
 			<div class="modal-footer">

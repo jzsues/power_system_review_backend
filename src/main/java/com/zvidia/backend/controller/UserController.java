@@ -1,12 +1,16 @@
 package com.zvidia.backend.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zvidia.backend.repository.InternalUserRepository;
+import com.zvidia.backend.repository.FunctionRepository;
+import com.zvidia.backend.repository.RoleRepository;
+import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.entity.UserInfo;
 
 /**
@@ -15,14 +19,23 @@ import com.zvidia.common.entity.UserInfo;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends
-		AbstractAjaxController<UserInfo, Long> {
+public class UserController extends AbstractAjaxController<UserInfo, Long> {
 	@Autowired
-	InternalUserRepository internalUserRepository;
+	UserRepository userRepository;
+
+	@Autowired
+	FunctionRepository functionRepository;
+
+	@Autowired
+	RoleRepository roleRepository;
 
 	@Override
 	protected Page<UserInfo> getAjaxPageData(Pageable pageable) {
-		return internalUserRepository.findAll(pageable);
+		return userRepository.findAll(pageable);
+	}
+
+	protected Object getPageAddition(HttpServletRequest request) {
+		return roleRepository.findAll();
 	}
 
 	@Override
@@ -32,16 +45,16 @@ public class UserController extends
 
 	@Override
 	protected UserInfo doSave(UserInfo entity) {
-		return internalUserRepository.save(entity);
+		return userRepository.save(entity);
 	}
 
 	@Override
 	protected void doDelete(Long id) {
-		internalUserRepository.delete(id);
+		userRepository.delete(id);
 	}
 
 	@Override
 	protected UserInfo doGet(Long id) {
-		return internalUserRepository.findOne(id);
+		return userRepository.findOne(id);
 	}
 }

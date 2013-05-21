@@ -4,6 +4,7 @@
 package com.zvidia.backend.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -37,6 +38,12 @@ public class StationInfo extends AbstractEntity {
 	 * 备注
 	 */
 	private String remark;
+
+	/**
+	 * 二维码信息
+	 */
+	@OneToOne
+	private QRCodeInfo qrCodeInfo;
 
 	public String getName() {
 		return name;
@@ -76,6 +83,14 @@ public class StationInfo extends AbstractEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public QRCodeInfo getQrCodeInfo() {
+		return qrCodeInfo;
+	}
+
+	public void setQrCodeInfo(QRCodeInfo qrCodeInfo) {
+		this.qrCodeInfo = qrCodeInfo;
 	}
 
 }

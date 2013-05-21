@@ -34,7 +34,9 @@
 <script src="<c:url value='/resources/js/form.js'/>" type="text/javascript"></script>
 <!-- biz js  -->
 <script src="<c:url value="/resources/js/menu-processor-holder.js"/>" type="text/javascript"></script>
-<script src="<c:url value='/resources/js/biz/announcement.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/user.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/func.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/js/biz/role.js'/>" type="text/javascript"></script>
 <script type="text/javascript">
 	$("[rel=tooltip]").tooltip();
 	$(function() {

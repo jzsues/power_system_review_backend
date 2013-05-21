@@ -1,7 +1,8 @@
-var schedule_biz = {
+var func_biz = {
+
 	page_fetch_fn : function(success, error) {
 		$.ajax({
-			url : Utils.ctxPath() + "/schedule/page.json?ftl=schedule_list",
+			url : Utils.ctxPath() + "/func/page.json?ftl=func_list",
 			contentType : "application/json",
 			dataType : "json",
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -14,16 +15,17 @@ var schedule_biz = {
 
 	},
 	table_initial_fn : function() {
-		return $('#schedule-list-table').dataTable(
+		return $('#func-list-table').dataTable(
 				{
 					"sDom" : "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oTableTools" : {
 						"aButtons" : [ {
 							"sExtends" : "text",
-							"sButtonText" : '新增船期',
+							"sButtonText" : '新增功能',
+							// "sButtonClass" : "btn btn-success",
 							"fnClick" : function(nButton, oConfig, oFlash) {
-								$("#schedule-form").find("input[id='id']").val("");
+								$("#func-form").find("input[id='id']").val("");
 								$("#show-dialog").modal("show").css({
 									width : '75%',
 									'margin-left' : function() {
@@ -35,8 +37,7 @@ var schedule_biz = {
 					},
 					"bProcessing" : true,
 					"bServerSide" : true,
-					"sAjaxSource" : Utils.ctxPath() + "/schedule/ajax/list",
-					"aaSorting" : [ [ 0, "desc" ] ],
+					"sAjaxSource" : Utils.ctxPath() + "/func/ajax/list",
 					"fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
 						oSettings.jqXHR = $.ajax({
 							"dataType" : 'json',
@@ -51,24 +52,20 @@ var schedule_biz = {
 								"aTargets" : [ 0 ],
 								"mData" : "id",
 								"mRender" : function(data, type, full) {
-
-									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'schedule_del\'](' + data
+									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'func_del\'](' + data
 											+ ')" class="btn btn-small del-row-btn">删除</button>' + '<button  data-id="' + data
-											+ '" onclick="window.event_handler_fns[\'schedule_update\'](' + data
+											+ '" onclick="window.event_handler_fns[\'func_update\'](' + data
 											+ ')" class="btn btn-small del-row-btn">修改</button>';
 								}
 							}, {
 								"aTargets" : [ 1 ],
-								"mData" : "shippingLine"
+								"mData" : "funcName"
 							}, {
 								"aTargets" : [ 2 ],
-								"mData" : "voyage",
-								"mRender" : function(data, type, full) {
-									return data;
-								}
+								"mData" : "funcUrl"
 							}, {
 								"aTargets" : [ 3 ],
-								"mData" : "shipInfo.shipNameCN",
+								"mData" : "funcIndex",
 								"mRender" : function(data, type, full) {
 									return data;
 								}
@@ -78,24 +75,20 @@ var schedule_biz = {
 								"mRender" : function(data, type, full) {
 									return (!data) ? "" : (new Date(data)).format("yyyy-MM-dd hh:mm:ss");
 								}
-							} ],
-					"fnInitComplete" : function(oSettings, json) {
-
-					}
+							} ]
 				});
 	},
 	form_initial_fn : function() {
-		$("#schedule-form").submit(function() {
-			$("#schedule-form").validate();
+		$("#func-form").submit(function() {
+			$("#func-form").validate();
 			$(".ajax-progress").toggle();
-			var oTable = $('#schedule-list-table').dataTable();
-			var json = $("#schedule-form").serializeObject();
+			var oTable = $('#func-list-table').dataTable();
 			$.ajax({
-				url : Utils.ctxPath() + "/schedule/ajax/save?shipId=" + json.shipId,
+				url : Utils.ctxPath() + "/func/ajax/save",
 				type : "POST",
 				dataType : "json",
 				contentType : "application/json",
-				data : JSON.stringify(json),
+				data : JSON.stringify($("#func-form").serializeObject()),
 				success : function(data, textStatus) {
 					$(".ajax-progress").toggle();
 					$("#show-dialog").modal("hide");
@@ -107,11 +100,12 @@ var schedule_biz = {
 			});
 			return false;
 		});
+
 	},
 	del_fn : function(id) {
-		var oTable = $('#schedule-list-table').dataTable();
+		var oTable = $('#func-list-table').dataTable();
 		$.ajax({
-			url : Utils.ctxPath() + "/schedule/ajax/del/" + id,
+			url : Utils.ctxPath() + "/func/ajax/del/" + id,
 			type : "POST",
 			dataType : "json",
 			contentType : "application/json",
@@ -124,39 +118,33 @@ var schedule_biz = {
 		});
 	},
 	update_fn : function(id) {
-
 		$.ajax({
-			url : Utils.ctxPath() + "/schedule/ajax/" + id,
+			url : Utils.ctxPath() + "/func/ajax/" + id,
 			type : "POST",
 			dataType : "json",
 			contentType : "application/json",
 			success : function(data, textStatus) {
 				if (data.addition) {
-					var json = data.addition;
-					json.shipId = json.shipInfo.id;
-					$("#schedule-form").populateJSON2Form(json);
-					$("#show-dialog").modal("show").css({
-						width : '75%',
-						'margin-left' : function() {
-							return -($(this).width() / 2);
-						}
-					});
+					$("#func-form").populateJSON2Form(data.addition);
+					$("#show-dialog").modal("show");
 				}
 			},
 			error : function() {
 				console.log(arguments);
 			}
 		});
+
 	}
 };
+
 (function(window, $) {
 	var page_initial_fns = window.page_initial_fns;
 	var table_initial_fns = window.table_initial_fns;
 	var form_initial_fns = window.form_initial_fns;
 	var event_handler_fns = window.event_handler_fns;
-	page_initial_fns["schedule_info"] = schedule_biz.page_fetch_fn;
-	table_initial_fns["schedule_info"] = schedule_biz.table_initial_fn;
-	form_initial_fns["schedule_info"] = schedule_biz.form_initial_fn;
-	event_handler_fns["schedule_del"] = schedule_biz.del_fn;
-	event_handler_fns["schedule_update"] = schedule_biz.update_fn;
+	page_initial_fns["func_info"] = func_biz.page_fetch_fn;
+	table_initial_fns["func_info"] = func_biz.table_initial_fn;
+	form_initial_fns["func_info"] = func_biz.form_initial_fn;
+	event_handler_fns["func_del"] = func_biz.del_fn;
+	event_handler_fns["func_update"] = func_biz.update_fn;
 })(window, jQuery);

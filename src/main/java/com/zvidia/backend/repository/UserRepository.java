@@ -27,7 +27,7 @@ import com.zvidia.common.entity.UserInfo;
  * Created with IntelliJ IDEA. User: jiangzm Date: 13-5-13 Time: 下午3:23 To
  * change this template use File | Settings | File Templates.
  */
-public interface InternalUserRepository extends JpaRepository<UserInfo, Long> {
+public interface UserRepository extends JpaRepository<UserInfo, Long> {
 
 	public UserInfo findByUsername(String username);
 }

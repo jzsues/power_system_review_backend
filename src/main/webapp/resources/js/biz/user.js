@@ -62,7 +62,7 @@ var user_biz = {
 								"mData" : "username"
 							}, {
 								"aTargets" : [ 2 ],
-								"mData" : "nickName"
+								"mData" : "email"
 							}, {
 								"aTargets" : [ 3 ],
 								"mData" : "enabled",
