@@ -3,7 +3,7 @@
 # Package Files #
 .DS_Store
 .idea/
-lib/
+/lib/
 target/
 work/
 src/main/webapp/WEB-INF/classes/

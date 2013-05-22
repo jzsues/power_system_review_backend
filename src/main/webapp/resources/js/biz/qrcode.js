@@ -71,7 +71,7 @@ var qrcode_biz = {
 								"mData" : "qrCodeInfo",
 								"mRender" : function(data, type, full) {
 									if (data) {
-										return "<a target='_blank' href='" + data.url + "'><img width='100' height='100' src='" + data.url
+										return "<a target='_blank' href='" + data.url + "'><img style='width:100px;height:100px;' src='" + data.url
 												+ "'></a>";
 									} else {
 										return "无";

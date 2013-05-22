@@ -71,7 +71,7 @@ var station_biz = {
 								"mData" : "qrCodeInfo",
 								"mRender" : function(data, type, full) {
 									if (data) {
-										return "<a target='_blank' href='" + data.url + "'><img width='100' height='100' src='" + data.url
+										return "<a target='_blank' href='" + data.url + "'><img style='width:100px;height:100px;' src='" + data.url
 												+ "'></a>";
 									} else {
 										return "无";
@@ -91,12 +91,13 @@ var station_biz = {
 			$("#station-form").validate();
 			$(".ajax-progress").toggle();
 			var oTable = $('#station-list-table').dataTable();
+			var json = $("#station-form").serializeObject();
 			$.ajax({
 				url : Utils.ctxPath() + "/station/ajax/save",
 				type : "POST",
 				dataType : "json",
 				contentType : "application/json",
-				data : JSON.stringify($("#station-form").serializeObject()),
+				data : JSON.stringify(json),
 				success : function(data, textStatus) {
 					$(".ajax-progress").toggle();
 					$("#show-dialog").modal("hide");
