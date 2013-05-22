@@ -12,5 +12,4 @@ import com.zvidia.backend.entity.CheckpointInfo;
  * 
  */
 public interface CheckpointRepository extends JpaRepository<CheckpointInfo, Long> {
-
 }
