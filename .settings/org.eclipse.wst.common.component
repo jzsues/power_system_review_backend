@@ -9,6 +9,12 @@
         <dependent-module archiveName="common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common/common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="core-2.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/core/core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javase-2.3-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/javase/javase">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="backend"/>
         <property name="java-output-path" value="/power_system_review_backend/target/classes"/>
     </wb-module>

@@ -26,6 +26,8 @@ import com.zvidia.backend.repository.CheckpointRepository;
 import com.zvidia.backend.repository.ReviewRepository;
 import com.zvidia.backend.service.QRCodeService;
 import com.zvidia.common.entity.AjaxResponse;
+import com.zvidia.common.meta.AjaxResponseCode;
+import com.zvidia.common.meta.AjaxResponseStatus;
 
 /**
  * @author jiangzm
@@ -57,11 +59,15 @@ public class ClientContoller {
 
 			@Override
 			public AjaxResponse call() throws Exception {
-				Order order1 = new Order(Direction.ASC, "deviceClassInfo.id");
-				Order order2 = new Order(Direction.ASC, "defectType");
-				Sort sort = new Sort(order1, order2);
-				List<CheckpointInfo> checkpoints = checkpointRepository.findAll(sort);
-				return new AjaxResponse(checkpoints);
+				try {
+					Order order1 = new Order(Direction.ASC, "deviceClassInfo.id");
+					Order order2 = new Order(Direction.ASC, "defectType");
+					Sort sort = new Sort(order1, order2);
+					List<CheckpointInfo> checkpoints = checkpointRepository.findAll(sort);
+					return new AjaxResponse(checkpoints);
+				} catch (Exception e) {
+					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
+				}
 			}
 		};
 	}
@@ -79,8 +85,13 @@ public class ClientContoller {
 
 			@Override
 			public AjaxResponse call() throws Exception {
-				ReviewInfo saved = reviewRepository.save(reviewInfo);
-				return new AjaxResponse(saved);
+				try {
+					ReviewInfo saved = reviewRepository.save(reviewInfo);
+					return new AjaxResponse(saved);
+				} catch (Exception e) {
+					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
+				}
+
 			}
 		};
 	}
@@ -98,8 +109,12 @@ public class ClientContoller {
 
 			@Override
 			public AjaxResponse call() throws Exception {
-				StationInfo station = qrCodeService.parseStationFromQRCode(qrcode);
-				return new AjaxResponse(station);
+				try {
+					StationInfo station = qrCodeService.parseStationFromQRCode(qrcode);
+					return new AjaxResponse(station);
+				} catch (Exception e) {
+					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
+				}
 			}
 		};
 	}
