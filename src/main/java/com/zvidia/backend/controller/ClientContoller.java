@@ -3,6 +3,7 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zvidia.backend.entity.CheckpointInfo;
 import com.zvidia.backend.entity.ReviewInfo;
+import com.zvidia.backend.entity.ReviewItemInfo;
 import com.zvidia.backend.entity.StationInfo;
+import com.zvidia.backend.meta.ReviewResult;
 import com.zvidia.backend.repository.CheckpointRepository;
 import com.zvidia.backend.repository.ReviewRepository;
 import com.zvidia.backend.service.QRCodeService;
@@ -86,6 +89,16 @@ public class ClientContoller {
 			@Override
 			public AjaxResponse call() throws Exception {
 				try {
+					Collection<ReviewItemInfo> reviewItemInfos = reviewInfo.getReviewItemInfos();
+					for (ReviewItemInfo reviewInfo : reviewItemInfos) {
+						CheckpointInfo checkpointInfo = reviewInfo.getCheckpointInfo();
+						// checkpoint需要报警并且异常时候
+						if (checkpointInfo.isAlarm() && ReviewResult.abnormal.name().equals(reviewInfo.getResult())) {
+							reviewInfo.setAlarm(true);
+							break;
+						}
+					}
+
 					ReviewInfo saved = reviewRepository.save(reviewInfo);
 					return new AjaxResponse(saved);
 				} catch (Exception e) {
