@@ -80,6 +80,7 @@
 	}
 	var page = 0;
 	function loopAlarm() {
+		var alarm_div = $("#alarm_div");
 		$.ajax({
 			url : Utils.ctxPath() + "/review/ajax/alarm/" + page + "/1",
 			type : "GET",
@@ -91,9 +92,10 @@
 					if (content.length > 0) {
 						page++;
 						var review = content[0];
-						var alarm_div = $("#alarm_div");
 						alarm_div.find("#alarm_user").text(review.userInfo.nickName);
-						alarm_div.find("#alarm_time").text(review.reviewTime);
+						alarm_div.find("#alarm_time").text(
+								(!review.reviewTime) ? "" : (new Date(review.reviewTime))
+										.format("yyyy-MM-dd hh:mm:ss"));
 						alarm_div.find("#alarm_id").val(review.id);
 						alarm_div.find("#alarm_info").text(review.stationInfo.name);
 						alarm_div.removeClass("hidden");
@@ -159,8 +161,10 @@
 						// console.log(data.addition.reviewItemInfos);
 						$("#alarm_show_station_name").val(review.stationInfo.name);
 						$("#alarm_show_station_address").val(review.stationInfo.address);
-						$("#alarm_show_review_time").val((!review.stationInfo.reviewTime) ? "" : (new Date(review.stationInfo.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
-						$("#alarm_show_review_user").val(review.userInfo.nickName+"-"+review.userInfo.username);
+						$("#alarm_show_review_time").val(
+								(!review.reviewTime) ? "" : (new Date(review.reviewTime))
+										.format("yyyy-MM-dd hh:mm:ss"));
+						$("#alarm_show_review_user").val(review.userInfo.nickName + "-" + review.userInfo.username);
 						otable.fnAddData(review.reviewItemInfos);
 					}
 					$("#alarm-show-dialog").modal("show").css({

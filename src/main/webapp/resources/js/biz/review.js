@@ -189,7 +189,7 @@ var review_biz = {
 						// console.log(data.addition.reviewItemInfos);
 						$("#show_station_name").val(review.stationInfo.name);
 						$("#show_station_address").val(review.stationInfo.address);
-						$("#show_review_time").val((!review.stationInfo.reviewTime) ? "" : (new Date(review.stationInfo.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
+						$("#show_review_time").val((!review.reviewTime) ? "" : (new Date(review.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
 						$("#show_review_user").val(review.userInfo.nickName+"-"+review.userInfo.username);
 						otable.fnAddData(review.reviewItemInfos);
 					}
