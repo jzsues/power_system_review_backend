@@ -3,15 +3,20 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.concurrent.Callable;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zvidia.backend.entity.ReviewInfo;
 import com.zvidia.backend.entity.StationInfo;
@@ -20,6 +25,7 @@ import com.zvidia.backend.repository.ReviewRepository;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.entity.AjaxResponse;
 import com.zvidia.common.entity.UserInfo;
 
 /**
@@ -82,4 +88,35 @@ public class ReviewController extends AbstractAjaxController<ReviewInfo, Long> {
 		return reviewRepository.findOne(id);
 	}
 
+	@RequestMapping("/ajax/alarm/{page}/{size}")
+	public @ResponseBody
+	Callable<AjaxResponse> alarm(final @PathVariable Integer page, final @PathVariable Integer size) {
+		return new Callable<AjaxResponse>() {
+
+			@Override
+			public AjaxResponse call() throws Exception {
+				Sort sort = new Sort(Direction.DESC, "reviewTime");
+				PageRequest pageRequest = new PageRequest(page, size, sort);
+				Page<ReviewInfo> page = reviewRepository.findByAlarmAndReadable(true, false, pageRequest);
+				return new AjaxResponse(page);
+			}
+
+		};
+	}
+
+	@RequestMapping("/ajax/read/{id}")
+	public @ResponseBody
+	Callable<AjaxResponse> read(final @PathVariable Long id) {
+		return new Callable<AjaxResponse>() {
+
+			@Override
+			public AjaxResponse call() throws Exception {
+				ReviewInfo review = reviewRepository.findOne(id);
+				review.setReadable(true);
+				reviewRepository.save(review);
+				return new AjaxResponse(review);
+			}
+
+		};
+	}
 }

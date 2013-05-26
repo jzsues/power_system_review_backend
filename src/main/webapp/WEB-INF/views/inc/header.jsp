@@ -5,10 +5,17 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<ul class="nav pull-right">
-
+			<li style="padding-top: 7px;"><div class="alert hidden" id="alarm_div">
+					<a href="#" onclick="javascript:showAlarm();" style="color: #b94a48;" title=""><i class=" icon-exclamation-sign"></i><strong>设备巡检高危缺陷提醒信息:</strong>
+					<input type="hidden" id="alarm_id"/>
+					巡检员:<span id="alarm_user"></span>,
+					巡检时间:<span id="alarm_time"></span>,
+					设备站点:<span id="alarm_info"></span>
+					</a>
+				</div></li>
 			<li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
-			<li id="fat-menu" class="dropdown"><a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user"></i> 测试用户 <i
-					class="icon-caret-down"></i>
+			<li id="fat-menu" class="dropdown"><a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="icon-user"></i> 测试用户 <i class="icon-caret-down"></i>
 			</a>
 
 				<ul class="dropdown-menu">

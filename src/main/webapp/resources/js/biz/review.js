@@ -147,6 +147,7 @@ var review_biz = {
 			"oTableTools" : {
 				"aButtons" : []
 			},
+			"bFilter" : false,
 			"aaData" : [],
 			"aoColumnDefs" : [ {
 				"aTargets" : [ 0 ],
@@ -183,9 +184,14 @@ var review_biz = {
 				if (data.addition) {
 					// $("#review-form").populateJSON2Form(data.addition);
 					otable.fnClearTable();
-					if (data.addition) {
+					var review = data.addition;
+					if (review) {
 						// console.log(data.addition.reviewItemInfos);
-						otable.fnAddData(data.addition.reviewItemInfos);
+						$("#show_station_name").val(review.stationInfo.name);
+						$("#show_station_address").val(review.stationInfo.address);
+						$("#show_review_time").val(review.stationInfo.reviewTime);
+						$("#show_review_user").val(review.userInfo.nickName+"-"+review.userInfo.username);
+						otable.fnAddData(review.reviewItemInfos);
 					}
 					$("#show-dialog").modal("show").css({
 						width : '75%',

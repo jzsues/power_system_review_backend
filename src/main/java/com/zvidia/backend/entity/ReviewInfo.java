@@ -55,6 +55,11 @@ public class ReviewInfo extends AbstractEntity {
 	private boolean alarm;
 
 	/**
+	 * 报警消息是否已读
+	 */
+	private boolean readable;
+
+	/**
 	 * 巡检备注
 	 */
 	private String remark;
@@ -105,6 +110,14 @@ public class ReviewInfo extends AbstractEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public boolean isReadable() {
+		return readable;
+	}
+
+	public void setReadable(boolean readable) {
+		this.readable = readable;
 	}
 
 }
