@@ -90,10 +90,10 @@ public class ClientContoller {
 			public AjaxResponse call() throws Exception {
 				try {
 					Collection<ReviewItemInfo> reviewItemInfos = reviewInfo.getReviewItemInfos();
-					for (ReviewItemInfo reviewInfo : reviewItemInfos) {
-						CheckpointInfo checkpointInfo = reviewInfo.getCheckpointInfo();
+					for (ReviewItemInfo reviewItemInfo : reviewItemInfos) {
+						CheckpointInfo checkpointInfo = reviewItemInfo.getCheckpointInfo();
 						// checkpoint需要报警并且异常时候
-						if (checkpointInfo.isAlarm() && ReviewResult.abnormal.name().equals(reviewInfo.getResult())) {
+						if (checkpointInfo.isAlarm() && ReviewResult.abnormal.name().equals(reviewItemInfo.getResult())) {
 							reviewInfo.setAlarm(true);
 							break;
 						}

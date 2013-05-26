@@ -22,6 +22,7 @@ var review_biz = {
 					"oTableTools" : {
 						"aButtons" : []
 					},
+					"aaSorting" : [ [ 4, "desc" ] ],
 					"bProcessing" : true,
 					"bServerSide" : true,
 					"sAjaxSource" : Utils.ctxPath() + "/review/ajax/list",
