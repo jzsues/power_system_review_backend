@@ -28,11 +28,11 @@
 	</logger>
 
 	<logger name="org.springframework.security">
-		<level value="error" />
+		<level value="debug" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="debug" />
+		<level value="error" />
 	</logger>
 
 	<logger name="org.springframework.data">

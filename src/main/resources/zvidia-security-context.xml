@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="
-      http://www.springframework.org/schema/security 
-      http://www.springframework.org/schema/security/spring-security-3.1.xsd
-      http://www.springframework.org/schema/beans 
-      http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
-	<http create-session="stateless" auto-config="true">
-		<sec:intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<sec:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
+
+	<sec:http create-session="stateless" auto-config="true">
 		<sec:form-login login-page="/main" />
-	</http>
+		<sec:custom-filter ref="filterInvocationInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+	</sec:http>
 
+	<bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager" ref="affirmativeBased" />
+		<property name="securityMetadataSource" ref="securityMetadataSourceService" />
+	</bean>
 
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetailsServiceImpl">
+	<bean id="affirmativeBased" class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+		<property name="rolePrefix" value="ROLE_" />
+	</bean>
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider user-service-ref="userDetailsServiceImpl">
 			<sec:password-encoder hash="md5" />
-		</authentication-provider>
-	</authentication-manager>
-</beans:beans>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+</beans>
