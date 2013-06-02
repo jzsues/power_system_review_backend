@@ -12,5 +12,5 @@ import com.zvidia.common.entity.FunctionInfo;
  * 
  */
 public interface FunctionRepository extends JpaRepository<FunctionInfo, Long> {
-
+	
 }

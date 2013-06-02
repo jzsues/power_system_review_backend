@@ -13,7 +13,7 @@
 					设备站点:<span id="alarm_info"></span>
 					</a>
 				</div></li>
-			<li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置</a></li>
+			<li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button"><i class="icon-wrench"></i>设置</a></li>
 			<li id="fat-menu" class="dropdown"><a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="icon-user"></i> 测试用户 <i class="icon-caret-down"></i>
 			</a>
