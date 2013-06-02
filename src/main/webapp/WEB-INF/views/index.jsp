@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="<c:url value='/resources/lib/font-awesome/css/font-awesome.css'/>" />
 <script src="<c:url value='/resources/lib/jquery-1.8.1.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/resources/lib/bootstrap/js/bootstrap.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/lib/validate/jquery.validate.min.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/resources/lib/validate/localization/messages_zh.js'/>" type="text/javascript"></script>
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"/>
@@ -75,7 +77,7 @@
 				<ul class="nav pull-right">
 
 				</ul>
-				<a class="brand" href="index.html"><span class="first"></span> <span class="second">电力巡检系统</span></a>
+				<a class="brand" href='<c:url value="/"/>'><span class="first"></span> <span class="second">电力设备巡检系统</span></a>
 			</div>
 		</div>
 	</div>
@@ -87,14 +89,16 @@
 				<div class="block">
 					<div class="block-heading">请登陆</div>
 					<div class="block-body">
-						<form>
-							<label>用户名</label> <input type="text" class="span12"> <label>密码</label> <input type="password" class="span12"> <a
-								href='<c:url value="/main"></c:url>' class="btn btn-primary pull-right">登陆</a>
+						<form action='<c:url value="/j_spring_security_check"/>' method="post">
+							<label>用户名</label> <input id="username" name="username" type="text" class="span12" required> <label>密码</label>
+							<input id="password" name="password" type="password" class="span12" required>
+							<button type="submit" class="btn btn-primary pull-right">登陆</button>
 							<div class="clearfix"></div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
