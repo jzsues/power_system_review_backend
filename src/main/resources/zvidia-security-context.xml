@@ -18,7 +18,7 @@
 		<sec:logout logout-success-url="/" logout-url="/logout" />
 		<sec:remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
 		<sec:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
-		<sec:session-management session-fixation-protection="none">
+		<sec:session-management session-fixation-protection="migrateSession">
 			<sec:concurrency-control max-sessions="5" />
 		</sec:session-management>
 	</sec:http>
