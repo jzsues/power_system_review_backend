@@ -182,7 +182,7 @@
 
 	}
 	$(document).ready(function() {
-		setInterval(loopAlarm, 5000);
+		setInterval(loopAlarm, 50000);
 		var page_initial_fns = window.page_initial_fns;
 		var table_initial_fns = window.table_initial_fns;
 		var form_initial_fns = window.form_initial_fns;

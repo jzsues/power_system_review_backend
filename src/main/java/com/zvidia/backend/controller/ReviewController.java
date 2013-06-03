@@ -3,6 +3,7 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zvidia.backend.entity.ReviewInfo;
@@ -27,6 +30,9 @@ import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.controller.AbstractAjaxController;
 import com.zvidia.common.entity.AjaxResponse;
 import com.zvidia.common.entity.UserInfo;
+import com.zvidia.common.meta.AjaxResponseCode;
+import com.zvidia.common.meta.AjaxResponseStatus;
+import com.zvidia.common.security.SecurityUtils;
 
 /**
  * @author jiangzm
@@ -99,6 +105,32 @@ public class ReviewController extends AbstractAjaxController<ReviewInfo, Long> {
 				PageRequest pageRequest = new PageRequest(page, size, sort);
 				Page<ReviewInfo> page = reviewRepository.findByAlarmAndReadable(true, false, pageRequest);
 				return new AjaxResponse(page);
+			}
+
+		};
+	}
+
+	@RequestMapping(value = "/ajax/handle/{id}", method = { RequestMethod.POST })
+	public @ResponseBody
+	Callable<AjaxResponse> handle(final @PathVariable Long id, final @RequestParam String result) {
+		final String username = SecurityUtils.checkUsername();
+		return new Callable<AjaxResponse>() {
+
+			@Override
+			public AjaxResponse call() throws Exception {
+				if (username == null) {
+					logger.error("can not save handle result with null username");
+					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
+				}
+				UserInfo handleUserInfo = userRepository.findByUsername(username);
+				ReviewInfo review = reviewRepository.findOne(id);
+				review.setReadable(true);
+				review.setHandleResult(result);
+				review.setHandleTime(new Date());
+				review.setHandleUserInfo(handleUserInfo);
+				review.setHandled(true);
+				reviewRepository.save(review);
+				return new AjaxResponse(review);
 			}
 
 		};

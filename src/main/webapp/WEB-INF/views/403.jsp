@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bootstrap Admin</title>
+    <title>电力设备巡检系统</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -76,11 +76,11 @@
     <div class="http-error">
         <h1>Oops!</h1>
 
-        <p class="info">You don't have permission to view this page.</p>
+        <p class="info">ERROR 403-您没有权限访问该页面</p>
 
         <p><i class="icon-home"></i></p>
 
-        <p><a href="<c:url value='/main'/>">Back to the home page</a></p>
+        <p><a href="<c:url value='/'/>">返回登录界面</a></p>
     </div>
 </div>
 </body>

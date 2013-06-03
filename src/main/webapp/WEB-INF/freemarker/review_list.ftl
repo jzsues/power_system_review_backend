@@ -5,7 +5,11 @@
 			<th>是否报警</th>
 			<th>设备站点</th>
 			<th>巡检人</th>
+			<th>巡检地点</th>
+			<th>经度</th>
+			<th>纬度</th>
 			<th>巡检时间</th>
+			<th>是否处理</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,21 +24,42 @@
 	</div>
 	<div class="modal-body">
 		<div class="row-fluid">
-			<div class="span4">
+			<div class="span3">
 				<label>站点名称</label> <input id="show_station_name" type="text" class="input-medium" readonly="readonly">
+			</div>
+			<div class="span3">
+				<label>经度/纬度</label> <input id="show_review_ll" type="text" class="input-medium" readonly="readonly">
+			</div>
+			<div class="span6">
+				<label>本次巡检地点</label> <input id="show_review_address" type="text" class="input-xlarge" readonly="readonly">
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span3">
+				<label>巡检人</label> <input id="show_review_user" type="text" class="input-medium" readonly="readonly">
+			</div>
+			<div class="span3">
+				<label>巡检时间</label> <input id="show_review_time" type="text" class="input-medium" readonly="readonly">
 			</div>
 			<div class="span6">
 				<label>站点地址</label> <input id="show_station_address" type="text" class="input-xlarge" readonly="readonly">
 			</div>
 		</div>
-		<div class="row-fluid">
+		<form id="handle-result-form" action="">
+			<div class="row-fluid">
+				<div class="span8">
+					<input type="hidden" id="reviewId" /> <label>处理结果</label>
+					<textarea id="handleResult" rows="4" class="input-xxlarge"></textarea>
+				</div>
+				<div class="span4">
+					<label>处理时间</label> <input id="handleTime" type="text" class="input-medium" readonly="readonly"> <label>处理人</label>
+					<input id="handleUser" type="text" class="input-medium" readonly="readonly">
+				</div>
+			</div>
 			<div class="span4">
-				<label>巡检人</label> <input id="show_review_user" type="text" class="input-medium" readonly="readonly">
+				<button type="submit" class="btn btn-warning" style="position: absolute; top: 50px; right: 50px;">提交处理结果</button>
 			</div>
-			<div class="span6">
-				<label>巡检时间</label> <input id="show_review_time" type="text" class="input-xlarge" readonly="readonly">
-			</div>
-		</div>
+		</form>
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered" id="review-item-list-table">
 			<thead>
 				<tr>

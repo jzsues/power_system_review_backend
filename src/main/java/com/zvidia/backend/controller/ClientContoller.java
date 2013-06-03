@@ -102,6 +102,7 @@ public class ClientContoller {
 					ReviewInfo saved = reviewRepository.save(reviewInfo);
 					return new AjaxResponse(saved);
 				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
 					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
 				}
 

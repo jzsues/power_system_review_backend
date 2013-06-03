@@ -65,12 +65,18 @@ var user_biz = {
 								"mData" : "nickName"
 							}, {
 								"aTargets" : [ 3 ],
+								"mData" : "department",
+								"mRender" : function(data, type, full) {
+									return data;
+								}
+							}, {
+								"aTargets" : [ 4 ],
 								"mData" : "enabled",
 								"mRender" : function(data, type, full) {
 									return (data) ? "是" : "否";
 								}
 							}, {
-								"aTargets" : [ 4 ],
+								"aTargets" : [ 5 ],
 								"mData" : "updated",
 								"mRender" : function(data, type, full) {
 									return (!data) ? "" : (new Date(data)).format("yyyy-MM-dd hh:mm:ss");

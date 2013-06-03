@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -67,27 +68,104 @@ public class ReviewInfo extends AbstractEntity {
 	/**
 	 * 经度
 	 */
-	private String longitude;
+	private double longitude;
 
 	/**
 	 * 纬度
 	 */
-	private String latitude;
+	private double latitude;
 
-	public String getLongitude() {
+	/**
+	 * 定位半径
+	 */
+	private float radius;
+
+	/**
+	 * 地址
+	 */
+	private String address;
+
+	/**
+	 * 定位类型
+	 */
+	private int locType;
+
+	private String handleResult;
+
+	@OneToOne
+	private UserInfo handleUserInfo;
+
+	/**
+	 * 是否处理
+	 */
+	private boolean handled;
+
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date handleTime;
+
+	public String getHandleResult() {
+		return handleResult;
+	}
+
+	public void setHandleResult(String handleResult) {
+		this.handleResult = handleResult;
+	}
+
+	public UserInfo getHandleUserInfo() {
+		return handleUserInfo;
+	}
+
+	public void setHandleUserInfo(UserInfo handleUserInfo) {
+		this.handleUserInfo = handleUserInfo;
+	}
+
+	public Date getHandleTime() {
+		return handleTime;
+	}
+
+	public void setHandleTime(Date handleTime) {
+		this.handleTime = handleTime;
+	}
+
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+	}
+
+	public float getRadius() {
+		return radius;
+	}
+
+	public void setRadius(float radius) {
+		this.radius = radius;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getLocType() {
+		return locType;
+	}
+
+	public void setLocType(int locType) {
+		this.locType = locType;
 	}
 
 	public UserInfo getUserInfo() {
@@ -144,6 +222,14 @@ public class ReviewInfo extends AbstractEntity {
 
 	public void setReadable(boolean readable) {
 		this.readable = readable;
+	}
+
+	public boolean isHandled() {
+		return handled;
+	}
+
+	public void setHandled(boolean handled) {
+		this.handled = handled;
 	}
 
 }

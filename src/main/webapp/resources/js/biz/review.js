@@ -22,7 +22,7 @@ var review_biz = {
 					"oTableTools" : {
 						"aButtons" : []
 					},
-					"aaSorting" : [ [ 4, "desc" ] ],
+					"aaSorting" : [ [ 7, "desc" ] ],
 					"bProcessing" : true,
 					"bServerSide" : true,
 					"sAjaxSource" : Utils.ctxPath() + "/review/ajax/list",
@@ -34,6 +34,12 @@ var review_biz = {
 							"data" : aoData,
 							"success" : fnCallback
 						});
+					},
+					"fnRowCallback" : function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+						if (aData["alarm"]) {
+							$(nRow).css("color", "red");
+						}
+						console.log(arguments);
 					},
 					"aoColumnDefs" : [
 							{
@@ -71,9 +77,33 @@ var review_biz = {
 								}
 							}, {
 								"aTargets" : [ 4 ],
+								"mData" : "address",
+								"mRender" : function(data, type, full) {
+									return data;
+								}
+							}, {
+								"aTargets" : [ 5 ],
+								"mData" : "longitude",
+								"mRender" : function(data, type, full) {
+									return data;
+								}
+							}, {
+								"aTargets" : [ 6 ],
+								"mData" : "latitude",
+								"mRender" : function(data, type, full) {
+									return data;
+								}
+							}, {
+								"aTargets" : [ 7 ],
 								"mData" : "updated",
 								"mRender" : function(data, type, full) {
 									return (!data) ? "" : (new Date(data)).format("yyyy-MM-dd hh:mm:ss");
+								}
+							}, {
+								"aTargets" : [ 8 ],
+								"mData" : "handled",
+								"mRender" : function(data, type, full) {
+									return (data) ? "是" : "否";
 								}
 							} ]
 				});
@@ -100,6 +130,27 @@ var review_biz = {
 			});
 			return false;
 		});
+		$("#handle-result-form").submit(
+				function() {
+					$(".ajax-progress").toggle();
+					var oTable = $('#review-list-table').dataTable();
+					$.ajax({
+						url : Utils.ctxPath() + "/review/ajax/handle/" + $("#handle-result-form").find("#reviewId").val() + "?result="
+								+ $("#handle-result-form").find("#handleResult").val(),
+						type : "POST",
+						dataType : "json",
+						contentType : "application/json",
+						success : function(data, textStatus) {
+							$(".ajax-progress").toggle();
+							$("#show-dialog").modal("hide");
+							oTable.fnDraw();
+						},
+						error : function() {
+							$(".ajax-progress").toggle();
+						}
+					});
+					return false;
+				});
 
 	},
 	del_fn : function(id) {
@@ -149,6 +200,11 @@ var review_biz = {
 			},
 			"bFilter" : false,
 			"aaData" : [],
+			"fnRowCallback" : function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+				if (aData["alarm"]) {
+					$(nRow).css("color", "red");
+				}
+			},
 			"aoColumnDefs" : [ {
 				"aTargets" : [ 0 ],
 				"mData" : "result",
@@ -175,36 +231,47 @@ var review_biz = {
 				}
 			} ]
 		});
-		$.ajax({
-			url : Utils.ctxPath() + "/review/ajax/" + id,
-			type : "POST",
-			dataType : "json",
-			contentType : "application/json",
-			success : function(data, textStatus) {
-				if (data.addition) {
-					// $("#review-form").populateJSON2Form(data.addition);
-					otable.fnClearTable();
-					var review = data.addition;
-					if (review) {
-						// console.log(data.addition.reviewItemInfos);
-						$("#show_station_name").val(review.stationInfo.name);
-						$("#show_station_address").val(review.stationInfo.address);
-						$("#show_review_time").val((!review.reviewTime) ? "" : (new Date(review.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
-						$("#show_review_user").val(review.userInfo.nickName+"-"+review.userInfo.username);
-						otable.fnAddData(review.reviewItemInfos);
-					}
-					$("#show-dialog").modal("show").css({
-						width : '75%',
-						'margin-left' : function() {
-							return -($(this).width() / 2);
+		$
+				.ajax({
+					url : Utils.ctxPath() + "/review/ajax/" + id,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json",
+					success : function(data, textStatus) {
+						if (data.addition) {
+							// $("#review-form").populateJSON2Form(data.addition);
+							otable.fnClearTable();
+							var review = data.addition;
+							if (review) {
+								// console.log(data.addition.reviewItemInfos);
+								$("#show_review_address").val(review.address);
+								$("#show_review_ll").val(review.longitude + "/" + review.latitude);
+								$("#show_station_name").val(review.stationInfo.name);
+								$("#show_station_address").val(review.stationInfo.address);
+								$("#show_review_time").val(
+										(!review.reviewTime) ? "" : (new Date(review.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
+								$("#show_review_user").val(review.userInfo.nickName + "-" + review.userInfo.username);
+
+								$("#reviewId").val(review.id);
+								$("#handleResult").val(review.handleResult);
+								$("#handleTime").val(
+										(!review.handleTime) ? "" : (new Date(review.handleTime)).format("yyyy-MM-dd hh:mm:ss"));
+								$("#handleUser").val(review.handleUserInfo.nickName);
+
+								otable.fnAddData(review.reviewItemInfos);
+							}
+							$("#show-dialog").modal("show").css({
+								width : '75%',
+								'margin-left' : function() {
+									return -($(this).width() / 2);
+								}
+							});
 						}
-					});
-				}
-			},
-			error : function() {
-				console.log(arguments);
-			}
-		});
+					},
+					error : function() {
+						console.log(arguments);
+					}
+				});
 	}
 };
 

@@ -7,13 +7,25 @@
 
 	<sec:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 
-	<sec:http create-session="stateless" auto-config="true">
-		<sec:form-login login-page="/" default-target-url="/main"  password-parameter="password"
+	<sec:http security="none" request-matcher="ant" pattern="/WEB-INF/views/**">
+	</sec:http>
+	<sec:http security="none" request-matcher="ant" pattern="/resources/**">
+	</sec:http>
+	<sec:http auto-config="true" request-matcher="ant" pattern="/**" access-decision-manager-ref="affirmativeBased"
+		authentication-manager-ref="authenticationManager">
+		<sec:form-login login-page="/" default-target-url="/main" password-parameter="password"
 			username-parameter="username" />
-		<sec:custom-filter ref="filterInvocationInterceptor" position="LAST" />
+		<sec:logout logout-success-url="/" logout-url="/logout" />
+		<sec:remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
+		<sec:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
+		<sec:session-management session-fixation-protection="none">
+			<sec:concurrency-control max-sessions="5" />
+		</sec:session-management>
 	</sec:http>
 
-	<bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+
+
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="accessDecisionManager" ref="affirmativeBased" />
 		<property name="securityMetadataSource" ref="securityMetadataSourceService" />
@@ -28,7 +40,7 @@
 	</bean>
 
 	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
-		<property name="rolePrefix" value="" />
+		<property name="rolePrefix" value="ROLE_" />
 	</bean>
 
 	<sec:authentication-manager alias="authenticationManager">
