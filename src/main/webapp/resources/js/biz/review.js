@@ -256,7 +256,9 @@ var review_biz = {
 								$("#handleResult").val(review.handleResult);
 								$("#handleTime").val(
 										(!review.handleTime) ? "" : (new Date(review.handleTime)).format("yyyy-MM-dd hh:mm:ss"));
-								$("#handleUser").val(review.handleUserInfo.nickName);
+								if(review.handleUserInfo){
+									$("#handleUser").val(review.handleUserInfo.nickName);
+								}
 
 								otable.fnAddData(review.reviewItemInfos);
 							}
