@@ -47,6 +47,7 @@ var user_biz = {
 							"success" : fnCallback
 						});
 					},
+					"aaSorting" : [ [ 5, "desc" ] ],
 					"aoColumnDefs" : [
 							{
 								"aTargets" : [ 0 ],
