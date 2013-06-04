@@ -118,16 +118,15 @@ public class ReviewController extends AbstractAjaxController<ReviewInfo, Long> {
 
 			@Override
 			public AjaxResponse call() throws Exception {
-				if (username == null) {
-					logger.error("can not save handle result with null username");
-					return new AjaxResponse(AjaxResponseStatus.BAD_REQUEST.getCode(), AjaxResponseCode.ERROR.getCode());
-				}
-				UserInfo handleUserInfo = userRepository.findByUsername(username);
 				ReviewInfo review = reviewRepository.findOne(id);
+				if (username != null) {
+					logger.error("save handle user:" + username);
+					UserInfo handleUserInfo = userRepository.findByUsername(username);
+					review.setHandleUserInfo(handleUserInfo);
+				}
 				review.setReadable(true);
 				review.setHandleResult(result);
 				review.setHandleTime(new Date());
-				review.setHandleUserInfo(handleUserInfo);
 				review.setHandled(true);
 				reviewRepository.save(review);
 				return new AjaxResponse(review);
