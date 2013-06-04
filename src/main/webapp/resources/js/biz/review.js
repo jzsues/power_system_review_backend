@@ -46,7 +46,7 @@ var review_biz = {
 								"mData" : "id",
 								"mRender" : function(data, type, full) {
 									return '<button  data-id="' + data + '" onclick="window.event_handler_fns[\'review_show\'](' + data
-											+ ')" class="btn btn-small del-row-btn">查看</button>';
+											+ ')" class="btn btn-small del-row-btn">处理</button>';
 								}
 							}, {
 								"aTargets" : [ 1 ],
