@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
+
 	<sec:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 
-	<sec:http security="none" request-matcher="ant" pattern="/WEB-INF/views/**">
-	</sec:http>
-	<sec:http security="none" request-matcher="ant" pattern="/resources/**">
-	</sec:http>
-	<sec:http auto-config="true" request-matcher="ant" pattern="/**" access-decision-manager-ref="affirmativeBased"
-		authentication-manager-ref="authenticationManager">
+	<sec:http pattern="/resources/**" request-matcher="ant" security="none" create-session="never" />
+	<sec:http pattern="/WEB-INF/views/*.jsp" request-matcher="ant" security="none" create-session="never" />
+
+	<sec:http use-expressions="true" request-matcher="ant">
+		<sec:intercept-url pattern="/" access="permitAll()" />
+		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
+
 		<sec:form-login login-page="/" default-target-url="/main" password-parameter="password"
 			username-parameter="username" />
-		<sec:logout logout-success-url="/" logout-url="/logout" />
-		<sec:remember-me key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
+
+		<sec:logout logout-success-url="/" logout-url="/logout" delete-cookies="JSESSIONID" />
 		<sec:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
-		<sec:session-management session-fixation-protection="migrateSession">
+		<sec:session-management session-fixation-protection="none">
 			<sec:concurrency-control max-sessions="5" />
 		</sec:session-management>
 	</sec:http>

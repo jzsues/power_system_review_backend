@@ -39,7 +39,6 @@ var review_biz = {
 						if (aData["alarm"]) {
 							$(nRow).css("color", "red");
 						}
-						console.log(arguments);
 					},
 					"aoColumnDefs" : [
 							{
