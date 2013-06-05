@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zvidia.backend.repository.FunctionRepository;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.FunctionInfo;
 
 /**
@@ -21,7 +21,7 @@ import com.zvidia.common.entity.FunctionInfo;
  */
 @Controller
 @RequestMapping("/func")
-public class FunctionController extends AbstractAjaxController<FunctionInfo, Long> {
+public class FunctionController extends AbstractAjaxCRUDController<FunctionInfo, Long> {
 
 	@Autowired
 	FunctionRepository functionRepository;

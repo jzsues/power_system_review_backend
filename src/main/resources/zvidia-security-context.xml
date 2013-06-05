@@ -16,9 +16,10 @@
 		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
 
 		<sec:form-login login-page="/" default-target-url="/main" password-parameter="password"
-			username-parameter="username" />
+			username-parameter="username" authentication-failure-url="/?error=true" />
 
 		<sec:logout logout-success-url="/" logout-url="/logout" delete-cookies="JSESSIONID" />
+		<sec:custom-filter ref="i18nFilter" before="SECURITY_CONTEXT_FILTER" />
 		<sec:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
 		<sec:session-management session-fixation-protection="none">
 			<sec:concurrency-control max-sessions="5" />
@@ -50,4 +51,23 @@
 			<sec:password-encoder hash="md5" />
 		</sec:authentication-provider>
 	</sec:authentication-manager>
+	<!-- Internationalization message handle -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:i18n/security/messages</value>
+				<value>classpath:i18n/app/messages</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+
+	<bean id="i18nFilter" class="com.zvidia.common.security.InternationalizationFilter">
+		<constructor-arg name="localeParam" value="lang" />
+		<constructor-arg name="localeResolver" ref="localeResolver" />
+	</bean>
+
 </beans>

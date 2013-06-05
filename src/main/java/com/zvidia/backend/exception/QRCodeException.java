@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zvidia.common.exception;
+package com.zvidia.backend.exception;
 
 /**
  * @author jiangzm

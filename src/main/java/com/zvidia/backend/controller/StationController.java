@@ -15,7 +15,7 @@ import com.zvidia.backend.entity.QRCodeInfo;
 import com.zvidia.backend.entity.StationInfo;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.service.QRCodeService;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 
 /**
  * @author jiangzm
@@ -23,7 +23,7 @@ import com.zvidia.common.controller.AbstractAjaxController;
  */
 @Controller
 @RequestMapping("/station")
-public class StationController extends AbstractAjaxController<StationInfo, Long> {
+public class StationController extends AbstractAjaxCRUDController<StationInfo, Long> {
 
 	@Autowired
 	StationRepository stationRepository;

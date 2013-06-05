@@ -18,7 +18,7 @@ import com.zvidia.backend.entity.DeviceClassInfo;
 import com.zvidia.backend.meta.DefectType;
 import com.zvidia.backend.repository.CheckpointRepository;
 import com.zvidia.backend.repository.DeviceClassRepository;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 
 /**
  * @author jiangzm
@@ -26,7 +26,7 @@ import com.zvidia.common.controller.AbstractAjaxController;
  */
 @Controller
 @RequestMapping("/checkpoint")
-public class CheckpointContoller extends AbstractAjaxController<CheckpointInfo, Long> {
+public class CheckpointContoller extends AbstractAjaxCRUDController<CheckpointInfo, Long> {
 
 	@Autowired
 	CheckpointRepository checkpointRepository;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.backend.repository.RoleRepository;
 import com.zvidia.backend.repository.UserRepository;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.RoleInfo;
 import com.zvidia.common.entity.UserInfo;
 
@@ -23,7 +23,7 @@ import com.zvidia.common.entity.UserInfo;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends AbstractAjaxController<UserInfo, Long> {
+public class UserController extends AbstractAjaxCRUDController<UserInfo, Long> {
 	@Autowired
 	UserRepository userRepository;
 

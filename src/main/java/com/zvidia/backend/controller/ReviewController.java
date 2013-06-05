@@ -27,11 +27,9 @@ import com.zvidia.backend.repository.ReviewItemRepository;
 import com.zvidia.backend.repository.ReviewRepository;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.repository.UserRepository;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.AjaxResponse;
 import com.zvidia.common.entity.UserInfo;
-import com.zvidia.common.meta.AjaxResponseCode;
-import com.zvidia.common.meta.AjaxResponseStatus;
 import com.zvidia.common.security.SecurityUtils;
 
 /**
@@ -40,7 +38,7 @@ import com.zvidia.common.security.SecurityUtils;
  */
 @Controller
 @RequestMapping("/review")
-public class ReviewController extends AbstractAjaxController<ReviewInfo, Long> {
+public class ReviewController extends AbstractAjaxCRUDController<ReviewInfo, Long> {
 
 	@Autowired
 	ReviewRepository reviewRepository;

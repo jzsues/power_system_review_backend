@@ -38,10 +38,10 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.zvidia.backend.entity.StationInfo;
+import com.zvidia.backend.exception.QRCodeException;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.service.QRCodeService;
 import com.zvidia.common.entity.AjaxResponse;
-import com.zvidia.common.exception.QRCodeException;
 import com.zvidia.common.security.SecurityUtils;
 
 /**

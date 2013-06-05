@@ -24,7 +24,7 @@ import com.zvidia.backend.entity.StationInfo;
 import com.zvidia.backend.repository.QRCodeRepository;
 import com.zvidia.backend.repository.StationRepository;
 import com.zvidia.backend.service.QRCodeService;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.AjaxResponse;
 
 /**
@@ -33,7 +33,7 @@ import com.zvidia.common.entity.AjaxResponse;
  */
 @Controller
 @RequestMapping("/qrcode")
-public class QrCodeController extends AbstractAjaxController<StationInfo, Long> {
+public class QrCodeController extends AbstractAjaxCRUDController<StationInfo, Long> {
 
 	@Autowired
 	QRCodeRepository qrCodeRepository;

@@ -26,6 +26,18 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<!-- i18n -->
+	<filter>
+		<filter-name>localizationFilter</filter-name>
+		<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+		<async-supported>true</async-supported>
+	</filter>
+	<filter-mapping>
+		<filter-name>localizationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- security -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -37,28 +49,14 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	<!-- Disables Servlet Container welcome file handling. Needed for compatibility with Servlet 3.0 and Tomcat 7.0 -->
 	<welcome-file-list>
 		<welcome-file></welcome-file>
 	</welcome-file-list>
 	<error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/views/403.jsp</location>
+		<location>/http_error</location>
 	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/views/404.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/views/500.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>503</error-code>
-		<location>/WEB-INF/views/503.jsp</location>
-	</error-page>
-	<session-config>
-		<session-timeout>-1</session-timeout>
-	</session-config>
+
 </web-app>

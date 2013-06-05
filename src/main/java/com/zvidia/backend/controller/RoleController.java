@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.backend.repository.RoleRepository;
-import com.zvidia.common.controller.AbstractAjaxController;
+import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.RoleInfo;
 
 /**
@@ -22,7 +22,7 @@ import com.zvidia.common.entity.RoleInfo;
  */
 @Controller
 @RequestMapping("/role")
-public class RoleController extends AbstractAjaxController<RoleInfo, Long> {
+public class RoleController extends AbstractAjaxCRUDController<RoleInfo, Long> {
 
 	@Autowired
 	FunctionRepository functionRepository;

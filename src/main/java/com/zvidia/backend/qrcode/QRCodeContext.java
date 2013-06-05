@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.zvidia.common.qrcode;
+package com.zvidia.backend.qrcode;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,7 +29,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
-import com.zvidia.common.exception.QRCodeException;
+import com.zvidia.backend.exception.QRCodeException;
 import com.zvidia.common.security.SecurityUtils;
 
 /**
@@ -38,7 +38,7 @@ import com.zvidia.common.security.SecurityUtils;
  */
 @Component
 @ImportResource("classpath:zvidia-properties-config.xml")
-public class QRCodeTools {
+public class QRCodeContext {
 	Log log = LogFactory.getLog(getClass());
 	public static final String QRCODE_INFO_ID_KEY = "id";
 	public static final String QRCODE_INFO_NAME_KEY = "name";

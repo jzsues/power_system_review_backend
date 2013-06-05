@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,39 +28,6 @@
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png" />
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" />
 <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" />
-<script type="text/javascript">
-	$("[rel=tooltip]").tooltip();
-	$(function() {
-		$('.demo-cancel-click').click(function() {
-			return false;
-		});
-	});
-</script>
-<!-- Demo page code -->
-<style type="text/css">
-#line-chart {
-	height: 300px;
-	width: 800px;
-	margin: 0px auto;
-	margin-top: 1em;
-}
-
-.brand {
-	font-family: georgia, serif;
-}
-
-.brand .first {
-	color: #ccc;
-	font-style: italic;
-}
-
-.brand .second {
-	color: #fff;
-	font-weight: bold;
-}
-</style>
-
-
 </head>
 
 <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
@@ -89,7 +56,7 @@
 				<div class="block">
 					<div class="block-heading">请登陆</div>
 					<div class="block-body">
-						<form action='<c:url value="/j_spring_security_check"/>' method="post">
+						<form action="<c:url value='/j_spring_security_check'/>" method="post">
 							<label>用户名</label> <input id="username" name="username" type="text" class="span12" required> <label>密码</label>
 							<input id="password" name="password" type="password" class="span12" required>
 							<button type="submit" class="btn btn-primary pull-right">登陆</button>
@@ -99,6 +66,16 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${param.error == 'true' && sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message!=null}">
+			<div class="row-fluid">
+				<div class="span4"></div>
+				<div class="alert alert-error span4 ">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<span>${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message }</span>
+				</div>
+				<div class="span4"></div>
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

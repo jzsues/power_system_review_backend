@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.zvidia.backend.entity.QRCodeInfo;
 import com.zvidia.backend.entity.StationInfo;
+import com.zvidia.backend.exception.QRCodeException;
+import com.zvidia.backend.qrcode.QRCodeContext;
 import com.zvidia.backend.repository.StationRepository;
-import com.zvidia.common.exception.QRCodeException;
-import com.zvidia.common.qrcode.QRCodeTools;
 
 /**
  * @author jiangzm
@@ -22,7 +22,7 @@ import com.zvidia.common.qrcode.QRCodeTools;
 public class QRCodeService {
 
 	@Autowired
-	QRCodeTools qrCodeTools;
+	QRCodeContext qrCodeTools;
 
 	@Autowired
 	StationRepository stationRepository;
@@ -73,7 +73,7 @@ public class QRCodeService {
 
 	public StationInfo parseStationFromQRCode(String qrcode) throws QRCodeException {
 		Map<String, String> parseQRCode = qrCodeTools.parseQRCode(qrcode);
-		Long id = Long.parseLong(parseQRCode.get(QRCodeTools.QRCODE_INFO_ID_KEY));
+		Long id = Long.parseLong(parseQRCode.get(QRCodeContext.QRCODE_INFO_ID_KEY));
 		return stationRepository.findOne(id);
 	}
 }
