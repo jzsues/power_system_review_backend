@@ -1,13 +1,22 @@
-/*
- * FullCalendar v1.5.3 Google Calendar Plugin
+/*******************************************************************************
+ * Copyright (C) 2013 ZVIDIA Co., Ltd.
  *
- * Copyright (c) 2011 Adam Shaw
- * Dual licensed under the MIT and GPL licenses, located in
- * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * Date: Mon Feb 6 22:40:40 2012 -0800
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- */
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.
+ *
+ * Contributors:
+ *     ZVIDIA Corporation - initial API and implementation
+ *******************************************************************************/
  
 (function($) {
 
