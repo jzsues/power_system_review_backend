@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.entity.FunctionInfo;
 import com.zvidia.common.entity.RoleInfo;
 import com.zvidia.common.entity.UserInfo;
+import com.zvidia.common.repository.UserRepository;
 import com.zvidia.common.security.SecurityUtils;
 
 /**

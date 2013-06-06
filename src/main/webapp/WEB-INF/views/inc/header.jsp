@@ -25,6 +25,6 @@
 				</ul></li>
 		</ul>
 		<a class="brand" href="<c:url value='/main'/>"><span class="first"><c:out value="${department}" /></span> <span
-			class="second">电力设备巡检系统</span></a>
+			class="second"><c:out value="${applicationInfo.appTitle }" /></span></a>
 	</div>
 </div>

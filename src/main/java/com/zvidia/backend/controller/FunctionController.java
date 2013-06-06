@@ -11,9 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.FunctionInfo;
+import com.zvidia.common.repository.FunctionRepository;
 
 /**
  * @author jiangzm

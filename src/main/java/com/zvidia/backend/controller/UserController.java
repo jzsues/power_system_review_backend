@@ -10,12 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.zvidia.backend.repository.FunctionRepository;
-import com.zvidia.backend.repository.RoleRepository;
-import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.RoleInfo;
 import com.zvidia.common.entity.UserInfo;
+import com.zvidia.common.repository.FunctionRepository;
+import com.zvidia.common.repository.RoleRepository;
+import com.zvidia.common.repository.UserRepository;
 
 /**
  * Created with IntelliJ IDEA. User: jiangzm Date: 13-5-13 Time: 下午9:55 To

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.entity.AjaxResponse;
 import com.zvidia.common.entity.UserInfo;
 import com.zvidia.common.meta.AjaxResponseCode;
 import com.zvidia.common.meta.AjaxResponseStatus;
+import com.zvidia.common.repository.UserRepository;
 import com.zvidia.common.security.SecurityUtils;
 
 /**

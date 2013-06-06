@@ -18,7 +18,7 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
-	<jpa:repositories base-package="com.zvidia.backend.repository" transaction-manager-ref="transactionManager"
+	<jpa:repositories base-package="com.zvidia" transaction-manager-ref="transactionManager"
 		entity-manager-factory-ref="entityManagerFactory" />
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
