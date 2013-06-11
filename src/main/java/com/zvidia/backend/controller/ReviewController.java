@@ -23,6 +23,7 @@
 package com.zvidia.backend.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +43,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zvidia.backend.entity.ReviewInfo;
 import com.zvidia.backend.entity.StationInfo;
+import com.zvidia.backend.entity.UserInfo;
 import com.zvidia.backend.repository.ReviewItemRepository;
 import com.zvidia.backend.repository.ReviewRepository;
+import com.zvidia.backend.repository.ReviewSpecifications;
 import com.zvidia.backend.repository.StationRepository;
+import com.zvidia.backend.repository.UserRepository;
 import com.zvidia.common.controller.AbstractAjaxCRUDController;
 import com.zvidia.common.entity.AjaxResponse;
-import com.zvidia.common.entity.UserInfo;
-import com.zvidia.common.repository.UserRepository;
 import com.zvidia.common.security.SecurityUtils;
 
 /**
@@ -87,8 +89,8 @@ public class ReviewController extends AbstractAjaxCRUDController<ReviewInfo, Lon
 	}
 
 	@Override
-	protected Page<ReviewInfo> doPageQuery(Pageable pageable) {
-		return reviewRepository.findAll(pageable);
+	protected Page<ReviewInfo> doPageQuery(Pageable pageable, HashMap<String, Object> query) {
+		return reviewRepository.findAll(ReviewSpecifications.reviewQuery(query), pageable);
 	}
 
 	@Override

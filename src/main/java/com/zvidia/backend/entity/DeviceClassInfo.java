@@ -26,7 +26,7 @@ import javax.persistence.Entity;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.zvidia.common.entity.AbstractEntity;
+import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
  * @author jiangzm
@@ -34,7 +34,7 @@ import com.zvidia.common.entity.AbstractEntity;
  */
 @Entity(name = "device_class_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DeviceClassInfo extends AbstractEntity {
+public class DeviceClassInfo extends AbstractSQLEntity {
 	private String name;
 
 	private String remark;

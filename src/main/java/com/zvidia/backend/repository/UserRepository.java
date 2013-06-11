@@ -17,37 +17,17 @@
  * Contributors:
  *     ZVIDIA Corporation - initial API and implementation
  *******************************************************************************/
-/**
- * 
- */
-package com.zvidia.backend.controller;
+package com.zvidia.backend.repository;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.zvidia.backend.repository.FunctionRepository;
-import com.zvidia.backend.repository.RoleRepository;
-import com.zvidia.backend.repository.UserRepository;
+import com.zvidia.backend.entity.UserInfo;
 
 /**
- * @author jiangzm
- * 
+ * Created with IntelliJ IDEA. User: jiangzm Date: 13-5-13 Time: 下午3:23 To
+ * change this template use File | Settings | File Templates.
  */
-@Controller
-@RequestMapping("/security")
-public class SecurityController {
-	Log log = LogFactory.getLog(getClass());
+public interface UserRepository extends JpaRepository<UserInfo, Long> {
 
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	RoleRepository roleRepository;
-
-	@Autowired
-	FunctionRepository functionRepository;
-
+	public UserInfo findByUsername(String username);
 }

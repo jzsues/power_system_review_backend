@@ -22,6 +22,8 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class StationController extends AbstractAjaxCRUDController<StationInfo, L
 	QRCodeService qrCodeService;
 
 	@Override
-	protected Page<StationInfo> doPageQuery(Pageable pageable) {
+	protected Page<StationInfo> doPageQuery(Pageable pageable, HashMap<String, Object> query) {
 		return stationRepository.findAll(pageable);
 	}
 

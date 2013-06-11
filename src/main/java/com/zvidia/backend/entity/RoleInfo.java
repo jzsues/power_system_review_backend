@@ -17,100 +17,67 @@
  * Contributors:
  *     ZVIDIA Corporation - initial API and implementation
  *******************************************************************************/
-/**
- * 
- */
 package com.zvidia.backend.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.zvidia.common.entity.AbstractSQLEntity;
 
-/**
- * 电力设备站点信息
- * 
- * @author jiangzm
- * 
- */
-@Entity(name = "station_info")
+@Entity(name = "role_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StationInfo extends AbstractSQLEntity {
+public class RoleInfo extends AbstractSQLEntity implements GrantedAuthority {
 
-	private String name;
+	private static final long serialVersionUID = 180431158775979167L;
 
-	private String address;
+	@Column(unique = true, nullable = false)
+	private String authority;
 
-	/**
-	 * 经度
-	 */
-	private String longitude;
+	@Column
+	private String roleDesc;
 
-	/**
-	 * 纬度
-	 */
-	private String latitude;
+	@OneToMany(cascade = { CascadeType.REFRESH })
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Collection<FunctionInfo> funcs = new ArrayList<FunctionInfo>();
 
-	/**
-	 * 备注
-	 */
-	private String remark;
-
-	/**
-	 * 二维码信息
-	 */
-	@OneToOne(cascade = { CascadeType.ALL })
-	private QRCodeInfo qrCodeInfo;
-
-	public String getName() {
-		return name;
+	public String getRoleDesc() {
+		return roleDesc;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleDesc(String roleDesc) {
+		this.roleDesc = roleDesc;
 	}
 
-	public String getAddress() {
-		return address;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	@Override
+	public String getAuthority() {
+		return authority;
 	}
 
-	public String getLongitude() {
-		return longitude;
+	public Collection<FunctionInfo> getFuncs() {
+		return funcs;
 	}
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
+	public void setFuncs(Collection<FunctionInfo> funcs) {
+		this.funcs = funcs;
 	}
 
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public QRCodeInfo getQrCodeInfo() {
-		return qrCodeInfo;
-	}
-
-	public void setQrCodeInfo(QRCodeInfo qrCodeInfo) {
-		this.qrCodeInfo = qrCodeInfo;
+	@Override
+	public String toString() {
+		return "[" + authority + "]";
 	}
 
 }

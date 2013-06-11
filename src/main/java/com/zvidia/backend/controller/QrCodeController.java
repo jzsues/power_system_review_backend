@@ -22,6 +22,7 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -64,7 +65,7 @@ public class QrCodeController extends AbstractAjaxCRUDController<StationInfo, Lo
 	QRCodeService qrCodeService;
 
 	@Override
-	protected Page<StationInfo> doPageQuery(Pageable pageable) {
+	protected Page<StationInfo> doPageQuery(Pageable pageable, HashMap<String, Object> query) {
 		Page<StationInfo> findAll = stationRepository.findAll(pageable);
 		return findAll;
 	}

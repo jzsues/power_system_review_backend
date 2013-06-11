@@ -26,7 +26,7 @@ import javax.persistence.Entity;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.zvidia.common.entity.AbstractEntity;
+import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
  * @author jiangzm
@@ -34,7 +34,7 @@ import com.zvidia.common.entity.AbstractEntity;
  */
 @Entity(name = "qrcode_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class QRCodeInfo extends AbstractEntity {
+public class QRCodeInfo extends AbstractSQLEntity {
 	private String qrcode;
 
 	private String url;

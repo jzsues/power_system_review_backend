@@ -22,6 +22,7 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +60,7 @@ public class CheckpointContoller extends AbstractAjaxCRUDController<CheckpointIn
 	}
 
 	@Override
-	protected Page<CheckpointInfo> doPageQuery(Pageable pageable) {
+	protected Page<CheckpointInfo> doPageQuery(Pageable pageable, HashMap<String, Object> query) {
 		return checkpointRepository.findAll(pageable);
 	}
 

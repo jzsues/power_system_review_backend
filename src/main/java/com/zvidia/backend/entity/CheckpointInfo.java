@@ -28,7 +28,7 @@ import javax.persistence.OneToOne;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.zvidia.backend.meta.DefectType;
-import com.zvidia.common.entity.AbstractEntity;
+import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
  * @author jiangzm
@@ -36,7 +36,7 @@ import com.zvidia.common.entity.AbstractEntity;
  */
 @Entity(name = "checkpoint_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CheckpointInfo extends AbstractEntity {
+public class CheckpointInfo extends AbstractSQLEntity {
 	/**
 	 * 设备类别
 	 */

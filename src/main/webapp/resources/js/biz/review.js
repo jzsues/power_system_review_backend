@@ -1,22 +1,21 @@
 /*******************************************************************************
  * Copyright (C) 2013 ZVIDIA Co., Ltd.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.
- *
- * Contributors:
- *     ZVIDIA Corporation - initial API and implementation
- *******************************************************************************/
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc.
+ * 
+ * Contributors: ZVIDIA Corporation - initial API and implementation
+ ******************************************************************************/
 var review_biz = {
 
 	page_fetch_fn : function(success, error) {
@@ -33,10 +32,26 @@ var review_biz = {
 		});
 
 	},
+	populate_query_div : function() {
+		var q_div = $("#q_div");
+		var q_station_name = q_div.find("#q_station_name").val();
+		var q_reviever = q_div.find("#q_reviever").val();
+		var q_alarm = q_div.find("#q_alarm").val();
+		var q_review_time_begin = q_div.find("#q_review_time_begin").val();
+		var q_review_time_end = q_div.find("#q_review_time_end").val();
+		return {
+			q_station_name : q_station_name,
+			q_reviever : q_reviever,
+			q_alarm : q_alarm,
+			q_review_time_begin : q_review_time_begin,
+			q_review_time_end : q_review_time_end
+		}
+
+	},
 	table_initial_fn : function() {
 		return $('#review-list-table').dataTable(
 				{
-					"sDom" : "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+					"sDom" : "<'row-fluid'r>t<'row-fluid'<'span6'i><'span6'p>>",
 					"sPaginationType" : "bootstrap",
 					"oTableTools" : {
 						"aButtons" : []
@@ -45,6 +60,14 @@ var review_biz = {
 					"bProcessing" : true,
 					"bServerSide" : true,
 					"sAjaxSource" : Utils.ctxPath() + "/review/ajax/list",
+					"fnServerParams" : function(aoData) {
+						var q = review_biz.populate_query_div();
+						console.log(q);
+						aoData.push({
+							"name" : "q",
+							"value" : JSON.stringify(q)
+						});
+					},
 					"fnServerData" : function(sSource, aoData, fnCallback, oSettings) {
 						oSettings.jqXHR = $.ajax({
 							"dataType" : 'json',
@@ -127,6 +150,14 @@ var review_biz = {
 				});
 	},
 	form_initial_fn : function() {
+		$("#do_query").bind("click",function(){
+			var oTable = $('#review-list-table').dataTable();
+			oTable.fnDraw();
+		});
+		$('.datetimepicker').datetimepicker({
+			format : 'yyyy-mm-dd hh:ii',
+			autoclose : true
+		});
 		$("#review-form").submit(function() {
 			$("#review-form").validate();
 			$(".ajax-progress").toggle();
@@ -274,7 +305,7 @@ var review_biz = {
 								$("#handleResult").val(review.handleResult);
 								$("#handleTime").val(
 										(!review.handleTime) ? "" : (new Date(review.handleTime)).format("yyyy-MM-dd hh:mm:ss"));
-								if(review.handleUserInfo){
+								if (review.handleUserInfo) {
 									$("#handleUser").val(review.handleUserInfo.nickName);
 								}
 

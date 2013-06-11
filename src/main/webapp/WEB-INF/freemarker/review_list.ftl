@@ -1,3 +1,31 @@
+<div id="q_div" class="row-fluid">
+	<!-- 	<div class="span10">
+		<div class="row-fluid alert alert-info"> -->
+	<div class="span2">
+		<label><b>站点名称</b></label> <input id="q_station_name" type="text" class="input-small">
+	</div>
+	<div class="span2">
+		<label><b>巡检人</b></label> <input id="q_reviever" type="text" class="input-small">
+	</div>
+	<div class="span2">
+		<label><b>是否报警</b></label> <select id="q_alarm" class="input-small">
+			<option value="">请选择</option>
+			<option value="true">是</option>
+			<option value="false">否</option>
+		</select>
+	</div>
+	<div class="span4">
+		<label><b>巡检时间段</b></label> 开始：<input id="q_review_time_begin" type="text" class="input-medium datetimepicker"><br>结束：<input
+			id="q_review_time_end" type="text" class="input-medium  datetimepicker">
+	</div>
+	<div class="span2">
+		<label>&nbsp;</label>
+		<button id="do_query" class="btn btn-block">查询</button>
+	</div>
+	<!-- 		</div>
+	</div> -->
+</div>
+
 <table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered" id="review-list-table">
 	<thead>
 		<tr>

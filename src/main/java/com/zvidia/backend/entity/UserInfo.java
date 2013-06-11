@@ -20,34 +20,46 @@
 /**
  * 
  */
-package com.zvidia.backend.controller;
+package com.zvidia.backend.entity;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.io.Serializable;
 
-import com.zvidia.backend.repository.FunctionRepository;
-import com.zvidia.backend.repository.RoleRepository;
-import com.zvidia.backend.repository.UserRepository;
+import javax.persistence.Entity;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 /**
+ * 内部管理系统使用的用户数据实体
+ * 
  * @author jiangzm
  * 
  */
-@Controller
-@RequestMapping("/security")
-public class SecurityController {
-	Log log = LogFactory.getLog(getClass());
+@Entity(name = "user_info")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserInfo extends AbstractUser implements Serializable, UserDetails {
 
-	@Autowired
-	UserRepository userRepository;
+	private static final long serialVersionUID = 5277235597734481151L;
 
-	@Autowired
-	RoleRepository roleRepository;
+	private String nickName;
 
-	@Autowired
-	FunctionRepository functionRepository;
+	private String department;
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 
 }

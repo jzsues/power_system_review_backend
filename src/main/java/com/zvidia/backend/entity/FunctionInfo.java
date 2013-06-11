@@ -17,79 +17,82 @@
  * Contributors:
  *     ZVIDIA Corporation - initial API and implementation
  *******************************************************************************/
-/**
- * 
- */
 package com.zvidia.backend.entity;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import com.zvidia.backend.meta.ReviewResult;
 import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
+ * 功能
  * @author jiangzm
  * 
  */
-@Entity(name = "review_item_info")
+@Entity(name = "func_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReviewItemInfo extends AbstractSQLEntity {
-	/**
-	 * 巡检项目
-	 */
-	@OneToOne
-	private CheckpointInfo checkpointInfo;
+public class FunctionInfo extends AbstractSQLEntity implements Serializable {
 
-	/**
-	 * 巡检结果
-	 * 
-	 * @see ReviewResult
-	 */
-	private String result;
+	private static final long serialVersionUID = 2772786659401147926L;
 
-	/**
-	 * 是否报警
-	 */
-	private boolean alarm;
+	@Column
+	private String funcName;
 
-	/**
-	 * 备注
-	 */
-	private String remark;
+	@Column
+	private String funcUrl;
 
-	public CheckpointInfo getCheckpointInfo() {
-		return checkpointInfo;
+	@Column
+	private String category;
+
+	@Column
+	private Integer funcIndex;
+
+	@Transient
+	private boolean checked;
+
+	public boolean isChecked() {
+		return checked;
 	}
 
-	public void setCheckpointInfo(CheckpointInfo checkpointInfo) {
-		this.checkpointInfo = checkpointInfo;
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
-	public String getResult() {
-		return result;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setResult(String result) {
-		this.result = result;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getRemark() {
-		return remark;
+	public Integer getFuncIndex() {
+		return funcIndex;
 	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setFuncIndex(Integer funcIndex) {
+		this.funcIndex = funcIndex;
 	}
 
-	public boolean isAlarm() {
-		return alarm;
+	public String getFuncName() {
+		return funcName;
 	}
 
-	public void setAlarm(boolean alarm) {
-		this.alarm = alarm;
+	public void setFuncName(String funcName) {
+		this.funcName = funcName;
+	}
+
+	public String getFuncUrl() {
+		return funcUrl;
+	}
+
+	public void setFuncUrl(String funcUrl) {
+		this.funcUrl = funcUrl;
 	}
 
 }

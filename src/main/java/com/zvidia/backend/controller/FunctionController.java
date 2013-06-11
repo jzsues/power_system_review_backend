@@ -22,6 +22,8 @@
  */
 package com.zvidia.backend.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zvidia.backend.entity.FunctionInfo;
+import com.zvidia.backend.repository.FunctionRepository;
 import com.zvidia.common.controller.AbstractAjaxCRUDController;
-import com.zvidia.common.entity.FunctionInfo;
-import com.zvidia.common.repository.FunctionRepository;
 
 /**
  * @author jiangzm
@@ -46,7 +48,7 @@ public class FunctionController extends AbstractAjaxCRUDController<FunctionInfo,
 	FunctionRepository functionRepository;
 
 	@Override
-	protected Page<FunctionInfo> doPageQuery(Pageable pageable) {
+	protected Page<FunctionInfo> doPageQuery(Pageable pageable, HashMap<String, Object> query) {
 		return functionRepository.findAll(pageable);
 	}
 

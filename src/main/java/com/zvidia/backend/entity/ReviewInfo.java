@@ -37,8 +37,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.zvidia.common.entity.AbstractEntity;
-import com.zvidia.common.entity.UserInfo;
+import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
  * @author jiangzm
@@ -46,7 +45,7 @@ import com.zvidia.common.entity.UserInfo;
  */
 @Entity(name = "review_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReviewInfo extends AbstractEntity {
+public class ReviewInfo extends AbstractSQLEntity {
 	/**
 	 * 巡检人
 	 */

@@ -36,10 +36,10 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
-import com.zvidia.common.entity.FunctionInfo;
-import com.zvidia.common.entity.RoleInfo;
-import com.zvidia.common.repository.FunctionRepository;
-import com.zvidia.common.repository.RoleRepository;
+import com.zvidia.backend.entity.FunctionInfo;
+import com.zvidia.backend.entity.RoleInfo;
+import com.zvidia.backend.repository.FunctionRepository;
+import com.zvidia.backend.repository.RoleRepository;
 
 /**
  * @author jiangzm
