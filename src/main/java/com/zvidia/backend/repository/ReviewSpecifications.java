@@ -36,6 +36,7 @@ public class ReviewSpecifications {
 				if (cond != null && cond.size() > 0) {
 					String stationName = (String) cond.get("q_station_name");
 					String reviewer = (String) cond.get("q_reviever");
+					String handled = (String) cond.get("q_handled");
 					String alarm = (String) cond.get("q_alarm");
 					String reviewTimeBegin = (String) cond.get("q_review_time_begin");
 					String reviewTimeEnd = (String) cond.get("q_review_time_end");
@@ -58,6 +59,13 @@ public class ReviewSpecifications {
 							predicate = cb.equal(root.get("alarm"), "true".equals(alarm));
 						} else {
 							predicate = cb.and(predicate, cb.equal(root.get("alarm"), "true".equals(alarm)));
+						}
+					}
+					if (StringUtils.isNotEmpty(handled)) {
+						if (predicate == null) {
+							predicate = cb.equal(root.get("handled"), "true".equals(handled));
+						} else {
+							predicate = cb.and(predicate, cb.equal(root.get("handled"), "true".equals(handled)));
 						}
 					}
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");

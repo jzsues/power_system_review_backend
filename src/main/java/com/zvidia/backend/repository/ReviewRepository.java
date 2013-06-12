@@ -34,5 +34,5 @@ import com.zvidia.backend.entity.ReviewInfo;
  * 
  */
 public interface ReviewRepository extends JpaRepository<ReviewInfo, Long>, JpaSpecificationExecutor<ReviewInfo> {
-	public Page<ReviewInfo> findByAlarmAndReadable(boolean alarm, boolean readable, Pageable pageable);
+	public Page<ReviewInfo> findByAlarmAndHandled(boolean alarm, boolean handled, Pageable pageable);
 }

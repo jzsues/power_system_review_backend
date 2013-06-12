@@ -78,11 +78,11 @@
 		});
 		$("#" + active_id).parent().toggleClass("active");
 	}
-	var page = 0;
 	function loopAlarm() {
 		var alarm_div = $("#alarm_div");
+		var alarm_review = alarm_div.attr("data-review");
 		$.ajax({
-			url : Utils.ctxPath() + "/review/ajax/alarm/" + page + "/1",
+			url : Utils.ctxPath() + "/review/ajax/alarm/0/1",
 			type : "GET",
 			dataType : "json",
 			contentType : "application/json",
@@ -90,18 +90,18 @@
 				if (data.addition) {
 					var content = data.addition.content;
 					if (content.length > 0) {
-						page++;
 						var review = content[0];
 						alarm_div.find("#alarm_user").text(review.userInfo.nickName);
 						alarm_div.find("#alarm_time").text(
-								(!review.reviewTime) ? "" : (new Date(review.reviewTime))
-										.format("yyyy-MM-dd hh:mm:ss"));
+								(!review.reviewTime) ? "" : (new Date(review.reviewTime)).format("yyyy-MM-dd hh:mm:ss"));
 						alarm_div.find("#alarm_id").val(review.id);
 						alarm_div.find("#alarm_info").text(review.stationInfo.name);
+						alarm_div.attr("data-review", review.id);
 						alarm_div.removeClass("hidden");
+						document.getElementById("alarm_audio").play();
 					} else {
-						page = 0;
 						alarm_div.addClass("hidden");
+						document.getElementById("alarm_audio").pause();
 					}
 				}
 			},
@@ -111,78 +111,27 @@
 		});
 	}
 	function showAlarm() {
-		var id = $("#alarm_id").val();
-		var otable = $('#alarm-review-item-list-table').dataTable({
-			"sDom" : "<'row-fluid'<'span6'T><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-			"sPaginationType" : "bootstrap",
-			"bRetrieve" : true,
-			"oTableTools" : {
-				"aButtons" : []
-			},
-			"bFilter" : false,
-			"aaData" : [],
-			"aoColumnDefs" : [ {
-				"aTargets" : [ 0 ],
-				"mData" : "result",
-				"mRender" : function(data, type, full) {
-					return ("normal" == data) ? "正常" : "异常";
+		var page_initial_fns = window.page_initial_fns;
+		var table_initial_fns = window.table_initial_fns;
+		var form_initial_fns = window.form_initial_fns;
+		var target_id = "review_info";
+		var fetcher = page_initial_fns[target_id];
+		if (fetcher) {
+			fetcher(function(data) {
+				if (data) {
+					var addition = data.addition;
+					var content_div = $("#main-content");
+					content_div.empty();
+					content_div.append(addition);
+					table_initial_fns[target_id](true, "false");
+					form_initial_fns[target_id]();
+					toggleActive(target_id);
 				}
-			}, {
-				"aTargets" : [ 1 ],
-				"mData" : "checkpointInfo",
-				"mRender" : function(data, type, full) {
-					return (data) ? data.deviceClassInfo.name : "";
-				}
-			}, {
-				"aTargets" : [ 2 ],
-				"mData" : "checkpointInfo",
-				"mRender" : function(data, type, full) {
-					return DefectType[data.defectType];
-				}
-			}, {
-				"aTargets" : [ 3 ],
-				"mData" : "checkpointInfo",
-				"mRender" : function(data, type, full) {
-					return (data) ? data.defectDetail : "";
-				}
-			} ]
-		});
-		$.ajax({
-			url : Utils.ctxPath() + "/review/ajax/read/" + id,
-			type : "GET",
-			dataType : "json",
-			contentType : "application/json",
-			success : function(data, textStatus) {
-				if (data.addition) {
-					// $("#review-form").populateJSON2Form(data.addition);
-					otable.fnClearTable();
-					var review = data.addition;
-					if (review) {
-						// console.log(data.addition.reviewItemInfos);
-						$("#alarm_show_station_name").val(review.stationInfo.name);
-						$("#alarm_show_station_address").val(review.stationInfo.address);
-						$("#alarm_show_review_time").val(
-								(!review.reviewTime) ? "" : (new Date(review.reviewTime))
-										.format("yyyy-MM-dd hh:mm:ss"));
-						$("#alarm_show_review_user").val(review.userInfo.nickName + "-" + review.userInfo.username);
-						otable.fnAddData(review.reviewItemInfos);
-					}
-					$("#alarm-show-dialog").modal("show").css({
-						width : '75%',
-						'margin-left' : function() {
-							return -($(this).width() / 2);
-						}
-					});
-				}
-			},
-			error : function() {
-				console.log(arguments);
-			}
-		});
-
+			});
+		}
 	}
 	$(document).ready(function() {
-		setInterval(loopAlarm, 50000);
+		setInterval(loopAlarm, 20000);
 		var page_initial_fns = window.page_initial_fns;
 		var table_initial_fns = window.table_initial_fns;
 		var form_initial_fns = window.form_initial_fns;
@@ -233,45 +182,6 @@
 				<%@include file="inc/sidebar.jsp"%>
 			</div>
 			<div id="main-content" class="span9"></div>
-		</div>
-	</div>
-	<div id="alarm-show-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-		aria-hidden="true">
-		<div class="ajax-progress"></div>
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-			<h3 id="myModalLabel">配电设备缺陷巡检信息</h3>
-		</div>
-		<div class="modal-body">
-			<div class="row-fluid">
-				<div class="span4">
-					<label>站点名称</label> <input id="alarm_show_station_name" type="text" class="input-medium" readonly="readonly">
-				</div>
-				<div class="span6">
-					<label>站点地址</label> <input id="alarm_show_station_address" type="text" class="input-xlarge" readonly="readonly">
-				</div>
-			</div>
-			<div class="row-fluid">
-				<div class="span4">
-					<label>巡检人</label> <input id="alarm_show_review_user" type="text" class="input-medium" readonly="readonly">
-				</div>
-				<div class="span6">
-					<label>巡检时间</label> <input id="alarm_show_review_time" type="text" class="input-xlarge" readonly="readonly">
-				</div>
-			</div>
-			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover table-bordered"
-				id="alarm-review-item-list-table">
-				<thead>
-					<tr>
-						<th>结果</th>
-						<th>设备类别</th>
-						<th>缺陷类型</th>
-						<th>缺陷内容</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
 		</div>
 	</div>
 	<%@include file="inc/footer.jsp"%>

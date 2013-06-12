@@ -122,7 +122,12 @@ public class ReviewController extends AbstractAjaxCRUDController<ReviewInfo, Lon
 			public AjaxResponse call() throws Exception {
 				Sort sort = new Sort(Direction.DESC, "reviewTime");
 				PageRequest pageRequest = new PageRequest(page, size, sort);
-				Page<ReviewInfo> page = reviewRepository.findByAlarmAndReadable(true, false, pageRequest);
+				Page<ReviewInfo> page = reviewRepository.findByAlarmAndHandled(true, false, pageRequest);
+				// List<ReviewInfo> content = page.getContent();
+				// for (ReviewInfo info : content) {
+				// info.setReadable(true);
+				// }
+				// reviewRepository.save(content);
 				return new AjaxResponse(page);
 			}
 
@@ -154,19 +159,4 @@ public class ReviewController extends AbstractAjaxCRUDController<ReviewInfo, Lon
 		};
 	}
 
-	@RequestMapping("/ajax/read/{id}")
-	public @ResponseBody
-	Callable<AjaxResponse> read(final @PathVariable Long id) {
-		return new Callable<AjaxResponse>() {
-
-			@Override
-			public AjaxResponse call() throws Exception {
-				ReviewInfo review = reviewRepository.findOne(id);
-				review.setReadable(true);
-				reviewRepository.save(review);
-				return new AjaxResponse(review);
-			}
-
-		};
-	}
 }

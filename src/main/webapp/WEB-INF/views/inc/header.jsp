@@ -6,11 +6,13 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<ul class="nav pull-right">
-			<li style="padding-top: 7px;"><div class="alert hidden" id="alarm_div">
+			<li style="padding-top: 7px;">
+				<div class="alert hidden" id="alarm_div" data-review="">
 					<a href="#" onclick="javascript:showAlarm();" style="color: #b94a48;" title=""><i
 						class=" icon-exclamation-sign"></i><strong>设备巡检高危缺陷提醒信息:</strong> <input type="hidden" id="alarm_id" /> 巡检员:<span
 						id="alarm_user"></span>, 巡检时间:<span id="alarm_time"></span>, 设备站点:<span id="alarm_info"></span> </a>
-				</div></li>
+				</div>
+			</li>
 			<li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button"><i class="icon-wrench"></i>设置</a></li>
 			<li id="fat-menu" class="dropdown"><a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="icon-user"></i> <c:out value="${nickName}" /> <i class="icon-caret-down"></i>
@@ -28,3 +30,6 @@
 			class="second"><c:out value="${applicationInfo.appTitle }" /></span></a>
 	</div>
 </div>
+<audio id="alarm_audio" loop="false">
+	<source src="/file/alarm.mp3"></source>
+</audio>

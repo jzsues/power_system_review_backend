@@ -48,7 +48,7 @@ var review_biz = {
 		}
 
 	},
-	table_initial_fn : function() {
+	table_initial_fn : function(alarm, handled) {
 		return $('#review-list-table').dataTable(
 				{
 					"sDom" : "<'row-fluid'r>t<'row-fluid'<'span6'i><'span6'p>>",
@@ -62,7 +62,14 @@ var review_biz = {
 					"sAjaxSource" : Utils.ctxPath() + "/review/ajax/list",
 					"fnServerParams" : function(aoData) {
 						var q = review_biz.populate_query_div();
-						console.log(q);
+						if (alarm) {
+							q["q_alarm"] = "true";
+						}
+						if (handled == "true") {
+							q["q_handled"] = "true";
+						} else if (handled == "false") {
+							q["q_handled"] = "false";
+						}
 						aoData.push({
 							"name" : "q",
 							"value" : JSON.stringify(q)
@@ -150,7 +157,7 @@ var review_biz = {
 				});
 	},
 	form_initial_fn : function() {
-		$("#do_query").bind("click",function(){
+		$("#do_query").bind("click", function() {
 			var oTable = $('#review-list-table').dataTable();
 			oTable.fnDraw();
 		});
