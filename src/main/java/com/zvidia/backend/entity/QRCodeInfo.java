@@ -34,7 +34,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
  */
 @Entity(name = "qrcode_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class QRCodeInfo extends AbstractSQLEntity {
+public class QRCodeInfo extends AbstractSQLEntity<Long> {
 	private String qrcode;
 
 	private String url;

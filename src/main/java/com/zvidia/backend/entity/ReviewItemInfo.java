@@ -36,7 +36,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
  */
 @Entity(name = "review_item_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReviewItemInfo extends AbstractSQLEntity {
+public class ReviewItemInfo extends AbstractSQLEntity<Long> {
 	/**
 	 * 巡检项目
 	 */

@@ -38,7 +38,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
  */
 @Entity(name = "station_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StationInfo extends AbstractSQLEntity {
+public class StationInfo extends AbstractSQLEntity<Long> {
 
 	private String name;
 

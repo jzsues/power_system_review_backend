@@ -19,8 +19,6 @@
  *******************************************************************************/
 package com.zvidia.backend.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
@@ -31,14 +29,13 @@ import com.zvidia.common.entity.AbstractSQLEntity;
 
 /**
  * 功能
+ * 
  * @author jiangzm
  * 
  */
 @Entity(name = "func_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FunctionInfo extends AbstractSQLEntity implements Serializable {
-
-	private static final long serialVersionUID = 2772786659401147926L;
+public class FunctionInfo extends AbstractSQLEntity<Long> {
 
 	@Column
 	private String funcName;

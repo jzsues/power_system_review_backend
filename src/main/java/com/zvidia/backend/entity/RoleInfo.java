@@ -36,7 +36,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
 
 @Entity(name = "role_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RoleInfo extends AbstractSQLEntity implements GrantedAuthority {
+public class RoleInfo extends AbstractSQLEntity<Long> implements GrantedAuthority {
 
 	private static final long serialVersionUID = 180431158775979167L;
 

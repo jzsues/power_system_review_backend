@@ -36,7 +36,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
  */
 @Entity(name = "checkpoint_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CheckpointInfo extends AbstractSQLEntity {
+public class CheckpointInfo extends AbstractSQLEntity<Long> {
 	/**
 	 * 设备类别
 	 */

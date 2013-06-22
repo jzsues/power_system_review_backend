@@ -34,7 +34,7 @@ import com.zvidia.common.entity.AbstractSQLEntity;
  */
 @Entity(name = "system_setting_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SystemSettingInfo extends AbstractSQLEntity {
+public class SystemSettingInfo extends AbstractSQLEntity<Long> {
 	/**
 	 * 客户名称
 	 */

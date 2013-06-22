@@ -45,7 +45,7 @@ import com.zvidia.common.security.SecurityUtils;
  * 
  */
 @MappedSuperclass
-public abstract class AbstractUser extends AbstractSQLEntity {
+public abstract class AbstractUser extends AbstractSQLEntity<Long> {
 	/**
 	 * 用户名
 	 */
